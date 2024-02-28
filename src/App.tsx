@@ -6,10 +6,10 @@ import Counter from "./components/Counter";
 
 function App() {
   return (
-      <div>
+      <div data-testid="app-component">
           <Header/>
           <Content/>
-          <Counter/>
+          <Counter initialValue={0}/>
       </div>
   );
 }

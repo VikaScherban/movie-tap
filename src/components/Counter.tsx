@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
-function Counter() {
-    const [counter, setCounter] = useState(0);
+function Counter({initialValue}: {initialValue: number}) {
+    const [counter, setCounter] = useState(initialValue);
 
   const increaseNumber = () =>  {
     setCounter( (counter) => counter + 1);
@@ -12,8 +12,8 @@ function Counter() {
   }
 
   return (
-      <div>
-          <div> Counter Component</div>
+      <div data-testid="counter-component">
+          <div>Counter Component</div>
           <div>{counter}</div>
           <button onClick={increaseNumber}>Increase number</button>
           <button onClick={decreaseNumber}>Decrease number</button>
