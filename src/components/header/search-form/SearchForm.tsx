@@ -28,7 +28,7 @@ function SearchForm({ searchChange, initialQuery }: SearchData) {
     }
 
     return (
-      <form className="wrap-block" onSubmit={onSearch}>
+      <form className="wrap-block" onSubmit={onSearch} data-testid="search-component">
           <div className="label">FIND YOUR MOVIE</div>
           <input type="text"
                  name="query"
