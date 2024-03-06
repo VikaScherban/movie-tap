@@ -1,21 +1,18 @@
 import "./GenreSelect.css";
-import {GenreData} from "../../../models/genres";
+import {GenreData} from "../../../../models/genres";
 
-function GenreSelect({genres, currentGenre, genreSelected}: GenreData) {
+function GenreSelect({genres, currentGenre, onGenreSelected}: GenreData) {
     return (
-        <div className="genres-wrapper">
+        <div>
             <ul className="genres-list">
                 {genres.map((genre) => (
                     <li
                         key={genre.id}
                         className={currentGenre.id === genre.id ? "genre-tab active" : "genre-tab"}
-                        onClick={() => genreSelected(genre)}
+                        onClick={() => onGenreSelected(genre)}
                     >{genre.name}</li>
                 ))}
             </ul>
-            <div className="sort-by-block">
-                <div>SORT BY</div>
-            </div>
         </div>
     );
 }

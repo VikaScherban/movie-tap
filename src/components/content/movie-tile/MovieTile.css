@@ -1,0 +1,41 @@
+.movie-card {
+    display: inline-block;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 56px;
+    cursor: pointer;
+}
+
+.movie-poster img {
+    width: 322px;
+    height: 455px;
+}
+
+.movie-info {
+    color: #b0b0b0;
+    font-weight: 300;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 21px;
+}
+
+.movie-name {
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.movie-genres {
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+.movie-date {
+    font-size: 14px;
+    border: 1px solid #b0b0b0;
+    border-radius: 5px;
+    height: 18px;
+    padding: 4px 8px;
+    font-weight: 500;
+}
+

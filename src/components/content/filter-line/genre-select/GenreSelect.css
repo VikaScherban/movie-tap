@@ -1,11 +1,8 @@
-.genres-wrapper {
-    border-bottom: 1px solid #080707;
-}
-
 .genres-list {
     padding: 0;
     margin: 0;
     display: inline-block;
+    text-transform: uppercase;
 }
 
 .genre-tab {
@@ -26,5 +23,19 @@
 
 .sort-by-block {
     display: inline-block;
-    margin: auto;
+    padding: 15px;
 }
+
+.sort-by-button, .release-date-select {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.release-date-select option:not(:checked) {
+    color: black;
+}
+
+

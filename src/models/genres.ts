@@ -4,7 +4,7 @@ export interface Genre {
 }
 
 export interface GenreData {
-    genres: Genre[],
-    currentGenre: Genre,
-    genreSelected: (genre: Genre) => void
+    genres: Genre[];
+    currentGenre: Genre;
+    onGenreSelected: (genre: Genre) => void;
 }
