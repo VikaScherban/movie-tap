@@ -1,57 +1,29 @@
 import React from 'react';
-import {render, fireEvent, screen, waitFor} from '@testing-library/react';
+import {render, fireEvent, screen} from '@testing-library/react';
 
 import Content from './Content';
-import {GenresList, GenreTitle} from "../../constants/genres-const";
-import {MoviesList} from "../../constants/movies-const";
-import userEvent from "@testing-library/user-event";
-import {SortByOption} from "../../constants/sort-control-const";
+import {GenresList} from "../../constants/genres-const";
 
 describe('Content', () => {
-  let dummyMovieSelected: jest.Mock<any>;
+  let consoleLogSpy: jest.SpyInstance;
 
   beforeEach(() => {
-    dummyMovieSelected = jest.fn();
+    consoleLogSpy = jest.spyOn(console, 'log');
   });
 
-  it('renders the movie list', () => {
-    render(<Content movieSelected={dummyMovieSelected} />);
+  it('renders the correct initial genre', () => {
+    render(<Content />);
 
-    const movieList = screen.getByTestId('movie-list');
-
-    expect(movieList).toBeInTheDocument();
+    expect(screen.getByText(GenresList[0].name)).toBeInTheDocument();
   });
 
-  test('renders the filter line', () => {
-    render(<Content movieSelected={dummyMovieSelected} />);
+  it('updates genre on select', () => {
+    render(<Content />);
 
-    const filterLine = screen.getByTestId('filter-line');
+    fireEvent.click(screen.getByText(GenresList[1].name));
 
-    expect(filterLine).toBeInTheDocument();
+    expect(screen.getByText(GenresList[1].name)).toBeInTheDocument();
+    expect(consoleLogSpy).toHaveBeenCalledWith('Content, genreSelected', GenresList[1]);
   });
 
-  test('renders the count of movies found', () => {
-    render(<Content movieSelected={dummyMovieSelected} />);
-
-    const countResult = screen.getByText('movies found');
-
-    expect(countResult).toBeInTheDocument();
-  });
-
-  test('renders the movie tiles based on the movies list', () => {
-    render(<Content movieSelected={dummyMovieSelected} />);
-
-    const movieTitle = screen.getByText('Movie 1');
-
-    expect(movieTitle).toBeInTheDocument();
-  });
-
-  test('calls the movieSelected prop when a movie tile is clicked', () => {
-    render(<Content movieSelected={dummyMovieSelected} />);
-
-    const movieTitle = screen.getByText('Movie 3');
-
-    fireEvent.click(movieTitle);
-    expect(dummyMovieSelected).toHaveBeenCalledWith(2);
-  });
 });

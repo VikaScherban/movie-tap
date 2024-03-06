@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.5.1",
-    "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -15,7 +12,6 @@
     "@types/react-dom": "^18.2.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-fontawesome": "^1.7.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -25,15 +21,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "coverage": "react-scripts test --coverage",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "coverage": "react-scripts test --coverage"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest",
-      "plugin:storybook/recommended"
+      "react-app/jest"
     ]
   },
   "browserslist": {
@@ -49,7 +42,6 @@
     ]
   },
   "jest": {
-    "coveragePathIgnorePatterns": ["<rootDir>/src/stories"],
     "coverageThreshold": {
       "global": {
         "branches": 80,
@@ -59,19 +51,6 @@
     }
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.6.17",
-    "@storybook/addon-interactions": "^7.6.17",
-    "@storybook/addon-links": "^7.6.17",
-    "@storybook/addon-onboarding": "^1.0.11",
-    "@storybook/blocks": "^7.6.17",
-    "@storybook/preset-create-react-app": "^7.6.17",
-    "@storybook/react": "^7.6.17",
-    "@storybook/react-webpack5": "^7.6.17",
-    "@storybook/test": "^7.6.17",
-    "cypress": "^13.6.6",
-    "eslint-plugin-storybook": "^0.8.0",
-    "prop-types": "^15.8.1",
-    "storybook": "^7.6.17",
-    "webpack": "^5.90.3"
+    "cypress": "^13.6.6"
   }
 }
