@@ -1,9 +1,17 @@
 import {Genre} from "../models/genres";
 
+export enum GenreTitle {
+    All = 'All',
+    Documentary = 'Documentary',
+    Comedy = 'Comedy',
+    Horror = 'Horror',
+    Crime = 'Crime'
+}
+
 export const GenresList: Genre[] = [
-    { name: 'ALL', id: 0 },
-    { name: 'DOCUMENTARY', id: 1 },
-    { name: 'COMEDY', id: 2 },
-    { name: 'HORROR', id: 3 },
-    { name: 'CRIME', id: 4 },
+    { name: GenreTitle.All, id: 0 },
+    { name: GenreTitle.Documentary, id: 1 },
+    { name: GenreTitle.Comedy, id: 2 },
+    { name: GenreTitle.Horror, id: 3 },
+    { name: GenreTitle.Crime, id: 4 },
 ];

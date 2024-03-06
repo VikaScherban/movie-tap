@@ -1,6 +1,6 @@
 import {render, fireEvent, screen} from '@testing-library/react';
 import GenreSelect from './GenreSelect';
-import {GenresList} from "../../../constants/genres-const";
+import {GenresList} from "../../../../constants/genres-const";
 
 describe('GenreSelect', () => {
   it('should render correct genre items', () => {
@@ -18,11 +18,11 @@ describe('GenreSelect', () => {
     const genreItems = screen.getAllByRole('listitem');
 
     expect(genreItems).toHaveLength(5);
-    expect(screen.getByText('ALL')).toBeInTheDocument();
-    expect(screen.getByText('DOCUMENTARY')).toBeInTheDocument();
-    expect(screen.getByText('COMEDY')).toBeInTheDocument();
-    expect(screen.getByText('HORROR')).toBeInTheDocument();
-    expect(screen.getByText('CRIME')).toBeInTheDocument();
+    expect(screen.getByText('All')).toBeInTheDocument();
+    expect(screen.getByText('Documentary')).toBeInTheDocument();
+    expect(screen.getByText('Comedy')).toBeInTheDocument();
+    expect(screen.getByText('Horror')).toBeInTheDocument();
+    expect(screen.getByText('Crime')).toBeInTheDocument();
   });
 
   it('should highlight selected genre', () => {
@@ -37,7 +37,7 @@ describe('GenreSelect', () => {
         />
     );
 
-    const documentaryTab = screen.getByText('DOCUMENTARY');
+    const documentaryTab = screen.getByText('Documentary');
 
     fireEvent.click(documentaryTab);
 
@@ -56,7 +56,7 @@ describe('GenreSelect', () => {
         />
     );
 
-    const comedyTab = screen.getByText('COMEDY');
+    const comedyTab = screen.getByText('Comedy');
 
     fireEvent.click(comedyTab);
 

@@ -1,9 +1,9 @@
 import "./GenreSelect.css";
-import {GenreData} from "../../../models/genres";
+import {GenreData} from "../../../../models/genres";
 
 function GenreSelect({genres, currentGenre, genreSelected}: GenreData) {
     return (
-        <div className="genres-wrapper">
+        <div>
             <ul className="genres-list">
                 {genres.map((genre) => (
                     <li
@@ -13,9 +13,6 @@ function GenreSelect({genres, currentGenre, genreSelected}: GenreData) {
                     >{genre.name}</li>
                 ))}
             </ul>
-            <div className="sort-by-block">
-                <div>SORT BY</div>
-            </div>
         </div>
     );
 }
