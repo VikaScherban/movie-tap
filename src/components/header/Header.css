@@ -1,5 +1,5 @@
 .wrap-header {
-    height: 400px;
+    height: 600px;
     box-sizing: border-box;
     position: relative;
     filter: brightness(50%);
@@ -16,7 +16,7 @@
     height: 100%;
     background-image: url('../../images/header-background.png');
     background-repeat: no-repeat;
-    background-position: 50% 33%;
+    background-position: 50% 86%;
     background-size: cover;
     filter: blur(3px);
 }
@@ -24,7 +24,7 @@
 .content-header {
     padding: 20px 56px;
     box-sizing: border-box;
-    height: 400px;
+    height: 600px;
     position: absolute;
     top: 0;
     width: 100%;
@@ -39,7 +39,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 46%;
+    height: 73%;
 }
 
 .add-button {
@@ -53,10 +53,11 @@
     background-color: #606060;
     margin-left: auto;
     margin-right: 0;
+    cursor: pointer;
 }
 
 .logo-block {
-    background-image: url("../../images/logo-small.png");
+    background-image: url("../../images/logo.png");
     background-repeat: no-repeat;
     background-position: 50% 0;
     background-size: cover;

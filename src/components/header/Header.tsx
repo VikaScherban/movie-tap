@@ -12,7 +12,7 @@ function Header() {
     }
 
     return (
-        <div>
+        <div data-testid="header-component">
             <div className="wrap-header"></div>
             <div className="content-header">
                 <div className="top-content">
