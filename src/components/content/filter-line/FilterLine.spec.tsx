@@ -1,17 +1,16 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import FilterLine from './FilterLine';
-import {GenresList} from "../../../constants/genres-const";
+import {GenreTitle} from "../../../constants/genres-const";
 import {SortByOption} from "../../../constants/sort-control-const";
-import {Genre} from "../../../models/genres";
 
 describe('FilterLine', () => {
-    let currentGenreMock: Genre;
+    let currentGenreMock: GenreTitle;
     let onGenreSelectedSpy: jest.Mock<any>;
     let onSortChangedSpy: jest.Mock<any>;
     let currentSortingMock: SortByOption;
 
     beforeEach(() => {
-        currentGenreMock = GenresList[0];
+        currentGenreMock = GenreTitle.All;
         onGenreSelectedSpy= jest.fn();
         onSortChangedSpy = jest.fn();
         currentSortingMock = SortByOption.ReleaseDate;

@@ -6,6 +6,10 @@
     cursor: pointer;
 }
 
+.movie-poster {
+    position: relative;
+}
+
 .movie-poster img {
     width: 322px;
     height: 455px;
@@ -37,5 +41,51 @@
     height: 18px;
     padding: 4px 8px;
     font-weight: 500;
+}
+
+.three-dot-button {
+    background-color: #2A202D;
+    border-radius: 50%;
+    border: none;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    height: 36px;
+    width: 36px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.edit-movie-menu {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: #232323;
+    width: 170px;
+    padding-top: 20px;
+}
+
+.edit-movie-option {
+    padding: 6px 20px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.edit-movie-option:hover {
+    background-color: #F65261;
+}
+
+.edit-movie-close-button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 300;
+    color: #fff;
+    float: right;
+    margin-top: -15px;
+}
+
+.confirm-message {
+    margin-bottom: 30px;
 }
 

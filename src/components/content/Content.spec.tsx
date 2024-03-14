@@ -7,10 +7,14 @@ import {GenreTitle} from "../../constants/genres-const";
 
 describe('Content', () => {
   let onMovieSelectedSpy: jest.Mock<any>;
+  let onMovieEditSpy: jest.Mock<any>;
+  let onMovieDeleteSpy: jest.Mock<any>;
   let moviesListMock: Movie[];
 
   beforeEach(() => {
     onMovieSelectedSpy = jest.fn();
+    onMovieEditSpy = jest.fn();
+    onMovieDeleteSpy = jest.fn();
     moviesListMock = [
       {
         id: 0,
@@ -45,44 +49,104 @@ describe('Content', () => {
     ];
   });
 
-  it('renders the movie list', () => {
-    render(<Content moviesList={moviesListMock} onMovieSelected={onMovieSelectedSpy} />);
+  it('should render the movie list', () => {
+    render(<Content moviesList={moviesListMock}
+                    onMovieSelected={onMovieSelectedSpy}
+                    onMovieEdit={onMovieEditSpy}
+                    onMovieDelete={onMovieDeleteSpy}
+    />);
 
     const movieList = screen.getByTestId('movie-list');
 
     expect(movieList).toBeInTheDocument();
   });
 
-  test('renders the filter line', () => {
-    render(<Content moviesList={[]} onMovieSelected={onMovieSelectedSpy} />);
+  it('should render the filter line', () => {
+    render(<Content moviesList={[]}
+                    onMovieSelected={onMovieSelectedSpy}
+                    onMovieEdit={onMovieEditSpy}
+                    onMovieDelete={onMovieDeleteSpy}
+    />);
 
     const filterLine = screen.getByTestId('filter-line');
 
     expect(filterLine).toBeInTheDocument();
   });
 
-  test('renders the count of movies found', () => {
-    render(<Content moviesList={moviesListMock} onMovieSelected={onMovieSelectedSpy} />);
+  it('should render the count of movies found', () => {
+    render(<Content moviesList={moviesListMock}
+                    onMovieSelected={onMovieSelectedSpy}
+                    onMovieEdit={onMovieEditSpy}
+                    onMovieDelete={onMovieDeleteSpy}
+    />);
 
     const countResult = screen.getByText('movies found');
 
     expect(countResult).toBeInTheDocument();
   });
 
-  test('renders the movie tiles based on the movies list', () => {
-    render(<Content moviesList={moviesListMock} onMovieSelected={onMovieSelectedSpy} />);
+  it('should render the movie tiles based on the movies list', () => {
+    render(<Content moviesList={moviesListMock}
+                    onMovieSelected={onMovieSelectedSpy}
+                    onMovieEdit={onMovieEditSpy}
+                    onMovieDelete={onMovieDeleteSpy}
+    />);
 
     const movieTitle = screen.getByText('Movie 1');
 
     expect(movieTitle).toBeInTheDocument();
   });
 
-  test('calls the movieSelected prop when a movie tile is clicked', () => {
-    render(<Content moviesList={moviesListMock} onMovieSelected={onMovieSelectedSpy} />);
+  it('should call the movieSelected prop when a movie tile is clicked', () => {
+    render(<Content moviesList={moviesListMock}
+                    onMovieSelected={onMovieSelectedSpy}
+                    onMovieEdit={onMovieEditSpy}
+                    onMovieDelete={onMovieDeleteSpy}
+    />);
 
     const movieTitle = screen.getByText('Movie 3');
 
     fireEvent.click(movieTitle);
     expect(onMovieSelectedSpy).toHaveBeenCalledWith(2);
+  });
+
+  it('calls onMovieEdit when the edit button in a movie tile is clicked', () => {
+    render(
+        <Content
+            moviesList={moviesListMock}
+            onMovieSelected={onMovieSelectedSpy}
+            onMovieEdit={onMovieEditSpy}
+            onMovieDelete={onMovieDeleteSpy}
+        />
+    );
+
+    const threeDotButtons = screen.getAllByTestId('three-dot-button');
+    fireEvent.click(threeDotButtons[0]);
+    const editButton = screen.getByText('Edit');
+    fireEvent.click(editButton);
+
+    expect(onMovieEditSpy).toHaveBeenCalledTimes(1);
+    expect(onMovieEditSpy).toHaveBeenCalledWith(0);
+  });
+
+  it('calls onMovieDelete when the delete button in a movie tile is clicked', () => {
+    render(
+        <Content
+            moviesList={moviesListMock}
+            onMovieSelected={onMovieSelectedSpy}
+            onMovieEdit={onMovieEditSpy}
+            onMovieDelete={onMovieDeleteSpy}
+        />
+    );
+
+    const threeDotButtons = screen.getAllByTestId('three-dot-button');
+    fireEvent.click(threeDotButtons[0]);
+    const deleteButton = screen.getByText('Delete');
+    fireEvent.click(deleteButton);
+    const confirmDeleteButton = screen.getByText('CONFIRM')
+    fireEvent.click(confirmDeleteButton);
+
+    expect(onMovieDeleteSpy).toHaveBeenCalledTimes(1);
+    expect(onMovieDeleteSpy).toHaveBeenCalledWith(0);
   });
 });

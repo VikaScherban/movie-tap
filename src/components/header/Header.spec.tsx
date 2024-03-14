@@ -5,36 +5,35 @@ import Header from './Header';
 
 describe('Header', () => {
     let consoleLogSpy: jest.SpyInstance;
-    let alertMock: jest.Mock<any>;
+    let addMovieSpy: jest.Mock<any>;
 
     beforeEach(() => {
-        alertMock = jest.fn()
-        window.alert = alertMock;
+        addMovieSpy = jest.fn();
         consoleLogSpy = jest.spyOn(console, 'log');
     });
 
     it('renders without crashing', () => {
-        render(<Header />);
+        render(<Header addMovie = {addMovieSpy} />);
 
         expect(screen.getByText("+ ADD MOVIE")).toBeInTheDocument();
     });
 
     it('calls alert when Add Movie button is clicked', () => {
-        render(<Header />);
+        render(<Header addMovie = {addMovieSpy} />);
 
         fireEvent.click(screen.getByText("+ ADD MOVIE"));
 
-        expect(alertMock).toHaveBeenCalledWith('Add Movie Soon');
+        expect(addMovieSpy).toHaveBeenCalledTimes(1);
     });
 
     it('shows input field', () => {
-        render(<Header />);
+        render(<Header addMovie = {addMovieSpy} />);
 
         expect(screen.getByPlaceholderText('What do you want to watch?')).toBeInTheDocument();
     });
 
     it('calls searchChange on input change', () => {
-        render(<Header />);
+        render(<Header addMovie = {addMovieSpy} />);
 
         fireEvent.change(screen.getByPlaceholderText('What do you want to watch?'), { target: { value: 'test' } });
         fireEvent.click(screen.getByText('SEARCH'));

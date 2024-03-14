@@ -1,0 +1,70 @@
+.reset-button, .submit-button {
+    border-radius: 5px;
+    padding: 16px 57px;
+}
+
+.reset-button {
+    background-color: #232323;
+    border: 1px solid #F65261;
+    color: #F65261;
+}
+
+.submit-button {
+    background-color: #F65261;
+    color: #fff;
+    border: none;
+    margin-left: 13px;
+}
+
+.form-left-side, .form-right-side {
+    display: inline-block;
+    font-weight: 300;
+}
+
+.form-left-side {
+    width: 70%;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+.form-right-side {
+    width: 30%;
+}
+
+.form-description textarea {
+    width: 100%;
+    min-height: 197px;
+    margin-bottom: 50px;
+}
+
+.movie-input label {
+    display: block;
+    text-transform: uppercase;
+    color: #F65261;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.movie-input input, .movie-input textarea, .genre-select div[class$="control"] {
+    margin-bottom: 30px;
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
+    background-color: #323232;
+    border: none;
+    padding: 15px 18px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.movie-dialog-footer {
+    text-align: right;
+}
+
+.genre-select div[class$="control"] {
+    padding: 9px 18px;
+}
+
+.genre-select div[class$="menu"] {
+    background-color: #323232;
+}
