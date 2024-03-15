@@ -7,10 +7,10 @@ function GenreSelect({genres, currentGenre, onGenreSelected}: GenreData) {
             <ul className="genres-list">
                 {genres.map((genre) => (
                     <li
-                        key={genre.id}
-                        className={currentGenre.id === genre.id ? "genre-tab active" : "genre-tab"}
+                        key={genre}
+                        className={currentGenre === genre ? "genre-tab active" : "genre-tab"}
                         onClick={() => onGenreSelected(genre)}
-                    >{genre.name}</li>
+                    >{genre}</li>
                 ))}
             </ul>
         </div>

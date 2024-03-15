@@ -1,11 +1,8 @@
 import "./Header.css";
 import SearchForm from "./search-form/SearchForm";
 
-function Header() {
+function Header({addMovie}: {addMovie: () => void}) {
     const initialQuery = '';
-    const addMovie = () =>  {
-        alert('Add Movie Soon')
-    }
 
     const searchChange = (query: string) => {
         console.log('searchChange', query);

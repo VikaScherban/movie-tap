@@ -1,6 +1,6 @@
 import {render, fireEvent, screen} from '@testing-library/react';
 import GenreSelect from './GenreSelect';
-import {GenresList} from "../../../../constants/genres-const";
+import {GenreTitle} from "../../../../constants/genres-const";
 
 describe('GenreSelect', () => {
   let genreSelectedSpy: jest.Mock<any>;
@@ -10,11 +10,11 @@ describe('GenreSelect', () => {
   })
 
   it('should render correct genre items', () => {
-    const currentGenre = GenresList[1];
+    const currentGenre = GenreTitle.Crime;
 
     render(
         <GenreSelect
-            genres={GenresList}
+            genres={Object.values(GenreTitle)}
             currentGenre={currentGenre}
             onGenreSelected={genreSelectedSpy}
         />
@@ -31,11 +31,11 @@ describe('GenreSelect', () => {
   });
 
   it('should highlight selected genre', () => {
-    const currentGenre = GenresList[1];
+    const currentGenre = GenreTitle.Documentary;
 
     render(
         <GenreSelect
-            genres={GenresList}
+            genres={Object.values(GenreTitle)}
             currentGenre={currentGenre}
             onGenreSelected={genreSelectedSpy}
         />
@@ -49,11 +49,11 @@ describe('GenreSelect', () => {
   });
 
   it('should pass out selected genre', () => {
-    const currentGenre = GenresList[1];
+    const currentGenre = GenreTitle.Crime;
 
     render(
         <GenreSelect
-            genres={GenresList}
+            genres={Object.values(GenreTitle)}
             currentGenre={currentGenre}
             onGenreSelected={genreSelectedSpy}
         />
@@ -63,6 +63,6 @@ describe('GenreSelect', () => {
 
     fireEvent.click(comedyTab);
 
-    expect(genreSelectedSpy).toHaveBeenCalledWith(GenresList[2]);
+    expect(genreSelectedSpy).toHaveBeenCalledWith(GenreTitle.Comedy);
   });
 });

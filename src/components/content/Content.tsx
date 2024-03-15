@@ -1,17 +1,16 @@
 import "./Content.css";
-import {Genre} from "../../models/genres";
 import {useState} from "react";
-import {GenresList} from "../../constants/genres-const"
+import {GenreTitle} from "../../constants/genres-const"
 import FilterLine from "./filter-line/FilterLine";
 import {SortByOption} from "../../constants/sort-control-const";
 import MovieTile from "./movie-tile/MovieTile";
-import {ContentData} from "../../models/contect";
+import {ContentData} from "../../models/content";
 
-function Content({moviesList, onMovieSelected}: ContentData) {
-    const [currentGenre, updateGenre] = useState(GenresList[0]);
+function Content({moviesList, onMovieSelected, onMovieEdit, onMovieDelete}: ContentData) {
+    const [currentGenre, updateGenre] = useState(GenreTitle.All);
     const [currentSorting, updateSorting] = useState(SortByOption.ReleaseDate);
 
-    const onGenreSelected = (newGenre: Genre) => {
+    const onGenreSelected = (newGenre: GenreTitle) => {
         updateGenre(newGenre)
 
         console.log('Content, genreSelected', newGenre);
@@ -32,7 +31,12 @@ function Content({moviesList, onMovieSelected}: ContentData) {
             <div className="count-result"><strong>39</strong> movies found</div>
             <div className="movie-list">
                 {moviesList.map((movieInfo) => (
-                    <MovieTile key={movieInfo.id} movieInfo={movieInfo} onMovieSelected={onMovieSelected} />
+                    <MovieTile key={movieInfo.id}
+                               movieInfo={movieInfo}
+                               onMovieSelected={onMovieSelected}
+                               onMovieEdit={onMovieEdit}
+                               onMovieDelete={onMovieDelete}
+                    />
                 ))}
             </div>
         </div>

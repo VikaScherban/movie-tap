@@ -4,11 +4,11 @@ import {Movie} from "../../models/movies";
 import {GenreTitle} from "../../constants/genres-const";
 
 describe('MovieDetails', () => {
-  let dummyMovie: Movie;
-  let dummyGoBackClick: jest.Mock<any>;
+  let movieMock: Movie;
+  let goBackClickSpy: jest.Mock<any>;
 
   beforeEach(() => {
-    dummyMovie = {
+    movieMock = {
       id: 1,
       name: 'Example Movie',
       genres: [GenreTitle.Horror, GenreTitle.Documentary],
@@ -18,19 +18,19 @@ describe('MovieDetails', () => {
       imgUrl: 'https://example.com/movie-poster.png',
       description: 'This is an example movie.',
     };
-    dummyGoBackClick = jest.fn();
+    goBackClickSpy = jest.fn();
   });
 
-  test('should renders the movie details component with no movie selected', () => {
-    render(<MovieDetails movie={null} goBackClick={dummyGoBackClick} />);
+  it('should render the movie details component with no movie selected', () => {
+    render(<MovieDetails movie={null} goBackClick={goBackClickSpy} />);
 
     const noMovieSelectedText = screen.getByText('No movie selected');
 
     expect(noMovieSelectedText).toBeInTheDocument();
   });
 
-  test('should renders the movie details component with a movie', () => {
-    render(<MovieDetails movie={dummyMovie} goBackClick={dummyGoBackClick} />);
+  it('should render the movie details component with a movie', () => {
+    render(<MovieDetails movie={movieMock} goBackClick={goBackClickSpy} />);
 
     const movieName = screen.getByText('Example Movie');
     const movieGenres = screen.getByText('Horror, Documentary');
@@ -39,12 +39,12 @@ describe('MovieDetails', () => {
     expect(movieGenres).toBeInTheDocument();
   });
 
-  test('should calls the goBackClick prop when the add button is clicked', () => {
-    render(<MovieDetails movie={dummyMovie} goBackClick={dummyGoBackClick} />);
+  it('should call the goBackClick prop when the add button is clicked', () => {
+    render(<MovieDetails movie={movieMock} goBackClick={goBackClickSpy} />);
 
     const addButton = screen.getByTestId('search-icon');
     fireEvent.click(addButton);
 
-    expect(dummyGoBackClick).toHaveBeenCalled();
+    expect(goBackClickSpy).toHaveBeenCalled();
   });
 });

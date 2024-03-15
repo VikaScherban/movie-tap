@@ -14,4 +14,25 @@ export interface Movie {
 export interface MovieTileData {
     movieInfo: Movie;
     onMovieSelected: (id: number) => void;
+    onMovieEdit: (id: number) => void;
+    onMovieDelete: (id: number) => void;
+}
+
+export interface MovieDialogData {
+    onClose: () => void;
+    onSubmitChanges: (data: Movie) => void;
+    movie?: Movie | null
+    title?: string;
+}
+
+export interface MovieFormData {
+    onClose: () => void;
+    onSubmitChanges: (data: Movie) => void;
+    movie?: Movie | null;
+}
+
+export interface MovieDialogState {
+    isOpen: boolean;
+    title: string;
+    movie: Movie | null;
 }
