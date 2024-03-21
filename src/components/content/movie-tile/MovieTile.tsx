@@ -2,10 +2,10 @@ import "./MovieTile.css";
 import {MovieTileData} from "../../../models/movies";
 import {faEllipsisV, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useState} from "react";
+import React, {useState} from "react";
 import BaseDialog from "../../dialogs/base-dialog/BaseDialog";
 
-function MovieTile({movieInfo, onMovieSelected, onMovieEdit, onMovieDelete}: MovieTileData) {
+function MovieTile({movieInfo, onMovieSelected, onMovieEdit, onMovieDelete}: MovieTileData): React.JSX.Element {
     const [isMenuOpen, setOpenMenu] = useState(false);
     const [isDeleteDialogOpen, setOpenDeleteDialog] = useState(false);
 
@@ -45,7 +45,7 @@ function MovieTile({movieInfo, onMovieSelected, onMovieEdit, onMovieDelete}: Mov
     return (
         <div className="movie-card" data-testid={"movie-card-" + movieInfo.id}>
             <div className="movie-poster" onClick={() => onMovieSelected(movieInfo.id)}>
-                <img src={movieInfo.imgUrl} alt={movieInfo.name} key={movieInfo.imgUrl}/>
+                <img src={movieInfo.poster_path} alt={movieInfo.title} key={movieInfo.poster_path}/>
                 <button className="three-dot-button" data-testid="three-dot-button"  onClick={onEditClick}>
                     <FontAwesomeIcon icon={faEllipsisV}/>
                 </button>
@@ -73,10 +73,10 @@ function MovieTile({movieInfo, onMovieSelected, onMovieEdit, onMovieDelete}: Mov
             </div>
             <div className="movie-info">
                 <div>
-                <div className="movie-name" onClick={() => onMovieSelected(movieInfo.id)}>{movieInfo.name}</div>
+                <div className="movie-name" onClick={() => onMovieSelected(movieInfo.id)}>{movieInfo.title}</div>
                     <div className="movie-genres">{movieInfo.genres.join(', ')}</div>
                 </div>
-                <div className="movie-date">{movieInfo.date}</div>
+                <div className="movie-date">{movieInfo.release_date}</div>
             </div>
         </div>
     );

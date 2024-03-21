@@ -1,8 +1,9 @@
 import "./SortControl.css";
-import {SortByOption} from "../../../../constants/sort-control-const";
+import {SortByOptions} from "../../../../constants/sort-control-const";
 import {SortControlData} from "../../../../models/sortControl";
+import React from "react";
 
-function SortControl({currentSorting, onSortChanged}: SortControlData) {
+function SortControl({currentSorting, onSortChanged}: SortControlData): React.JSX.Element {
     const onSortChange = (event: any)=> {
         onSortChanged(event.target.value);
     }
@@ -15,12 +16,12 @@ function SortControl({currentSorting, onSortChanged}: SortControlData) {
                     onChange={onSortChange}
                     data-testid="sort-select"
             >
-                <option key={SortByOption.ReleaseDate}
-                        value={SortByOption.ReleaseDate}
-                >{SortByOption.ReleaseDate}</option>
-                <option key={SortByOption.Title}
-                        value={SortByOption.Title}
-                >{SortByOption.Title}</option>
+                <option key={SortByOptions.releaseDate.value}
+                        value={SortByOptions.releaseDate.value}
+                >{SortByOptions.releaseDate.label}</option>
+                <option key={SortByOptions.title.value}
+                        value={SortByOptions.title.value}
+                >{SortByOptions.title.label}</option>
             </select>
         </div>
     );

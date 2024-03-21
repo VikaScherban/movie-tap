@@ -11,18 +11,18 @@ const Template: StoryFn<typeof SearchForm> = (args) => <SearchForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    searchChange: (query) => console.log("Search query changed:", query),
+    onSearchChanged: (query) => console.log("Search query changed:", query),
     initialQuery: "",
 };
 
 export const InitialQueryStarWars = Template.bind({});
 InitialQueryStarWars.args = {
-    searchChange: (query) => console.log("Search query changed:", query),
+    onSearchChanged: (query) => console.log("Search query changed:", query),
     initialQuery: "Star Wars",
 };
 
 export const InitialQueryDefaultAction = Template.bind({});
 InitialQueryDefaultAction.args = {
-    searchChange: (query) => console.log("Search query changed:", query),
+    onSearchChanged: (query) => console.log("Search query changed:", query),
     initialQuery: "Action",
 };

@@ -4,10 +4,12 @@
     padding-bottom: 25px;
     padding-right: 56px;
     cursor: pointer;
+    width: 322px;
 }
 
 .movie-poster {
     position: relative;
+    min-height: 465px;
 }
 
 .movie-poster img {
@@ -41,6 +43,8 @@
     height: 18px;
     padding: 4px 8px;
     font-weight: 500;
+    min-width: 74px;
+    text-align: center;
 }
 
 .three-dot-button {

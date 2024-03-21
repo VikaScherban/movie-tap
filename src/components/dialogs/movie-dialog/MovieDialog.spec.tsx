@@ -9,13 +9,13 @@ describe('MovieDialog', () => {
   beforeEach(() => {
     movieMock = {
       id: 0,
-      imgUrl: 'http://img1',
-      name: 'Movie 1',
-      date: '01.01.01',
+      poster_path: 'http://img1',
+      title: 'Movie 1',
+      release_date: '01.01.01',
       genres: [GenreTitle.Horror, GenreTitle.Documentary],
-      rating: 7.4,
-      duration: 184,
-      description: 'Description of Movie 1',
+      vote_average: 7.4,
+      runtime: 184,
+      overview: 'Description of Movie 1',
     };
   })
 

@@ -1,7 +1,8 @@
 import "./GenreSelect.css";
 import {GenreData} from "../../../../models/genres";
+import React from "react";
 
-function GenreSelect({genres, currentGenre, onGenreSelected}: GenreData) {
+function GenreSelect({genres, currentGenre, onGenreSelected}: GenreData): React.JSX.Element {
     return (
         <div>
             <ul className="genres-list">

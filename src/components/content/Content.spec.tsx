@@ -1,14 +1,17 @@
 import React from 'react';
-import {render, fireEvent, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import Content from './Content';
 import {Movie} from "../../models/movies";
 import {GenreTitle} from "../../constants/genres-const";
+import {SortByOptions} from "../../constants/sort-control-const";
 
 describe('Content', () => {
   let onMovieSelectedSpy: jest.Mock<any>;
   let onMovieEditSpy: jest.Mock<any>;
   let onMovieDeleteSpy: jest.Mock<any>;
+  let onGenreSelectedSpy: jest.Mock<any>;
+  let onSortChangedSpy: jest.Mock<any>;
   let moviesListMock: Movie[];
 
   beforeEach(() => {
@@ -18,42 +21,44 @@ describe('Content', () => {
     moviesListMock = [
       {
         id: 0,
-        imgUrl: 'http://img1',
-        name: 'Movie 1',
-        date: '01.01.01',
+        poster_path: 'http://img1',
+        title: 'Movie 1',
+        release_date: '01.01.01',
         genres: [GenreTitle.Horror, GenreTitle.Documentary],
-        rating: 7.4,
-        duration: 184,
-        description: 'Description of Movie 1',
+        vote_average: 7.4,
+        runtime: 184,
+        overview: 'Description of Movie 1',
       },
       {
         id: 1,
-        imgUrl: 'http://img2',
-        name: 'Movie 2',
-        date: '04.02.99',
+        poster_path: 'http://img2',
+        title: 'Movie 2',
+        release_date: '04.02.99',
         genres: [GenreTitle.Crime, GenreTitle.Documentary],
-        rating: 8.1,
-        duration: 192,
-        description: 'Description of Movie 2'
+        vote_average: 8.1,
+        runtime: 192,
+        overview: 'Description of Movie 2'
       },
       {
         id: 2,
-        imgUrl: 'http://img3',
-        name: 'Movie 3',
-        date: '14.10.11',
+        poster_path: 'http://img3',
+        title: 'Movie 3',
+        release_date: '14.10.11',
         genres: [GenreTitle.Documentary],
-        rating: 9.4,
-        duration: 154,
-        description: 'Description of Movie 3'
+        vote_average: 9.4,
+        runtime: 154,
+        overview: 'Description of Movie 3'
       },
     ];
   });
 
   it('should render the movie list', () => {
-    render(<Content moviesList={moviesListMock}
+    render(<Content data={{movieList: moviesListMock, sortBy: SortByOptions.releaseDate.value, activeGenre: 'All'}}
                     onMovieSelected={onMovieSelectedSpy}
                     onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
+                    onGenreSelected={onGenreSelectedSpy}
+                    onSortChanged={onSortChangedSpy}
     />);
 
     const movieList = screen.getByTestId('movie-list');
@@ -62,10 +67,12 @@ describe('Content', () => {
   });
 
   it('should render the filter line', () => {
-    render(<Content moviesList={[]}
+    render(<Content data={{movieList: [], sortBy: SortByOptions.releaseDate.value, activeGenre: 'All'}}
                     onMovieSelected={onMovieSelectedSpy}
                     onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
+                    onGenreSelected={onGenreSelectedSpy}
+                    onSortChanged={onSortChangedSpy}
     />);
 
     const filterLine = screen.getByTestId('filter-line');
@@ -74,10 +81,12 @@ describe('Content', () => {
   });
 
   it('should render the count of movies found', () => {
-    render(<Content moviesList={moviesListMock}
+    render(<Content data={{movieList: moviesListMock, sortBy: SortByOptions.releaseDate.value, activeGenre: 'All'}}
                     onMovieSelected={onMovieSelectedSpy}
                     onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
+                    onGenreSelected={onGenreSelectedSpy}
+                    onSortChanged={onSortChangedSpy}
     />);
 
     const countResult = screen.getByText('movies found');
@@ -86,10 +95,12 @@ describe('Content', () => {
   });
 
   it('should render the movie tiles based on the movies list', () => {
-    render(<Content moviesList={moviesListMock}
+    render(<Content data={{movieList: moviesListMock, sortBy: SortByOptions.releaseDate.value, activeGenre: 'All'}}
                     onMovieSelected={onMovieSelectedSpy}
                     onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
+                    onGenreSelected={onGenreSelectedSpy}
+                    onSortChanged={onSortChangedSpy}
     />);
 
     const movieTitle = screen.getByText('Movie 1');
@@ -98,10 +109,12 @@ describe('Content', () => {
   });
 
   it('should call the movieSelected prop when a movie tile is clicked', () => {
-    render(<Content moviesList={moviesListMock}
+    render(<Content data={{movieList: moviesListMock, sortBy: SortByOptions.releaseDate.value, activeGenre: 'All'}}
                     onMovieSelected={onMovieSelectedSpy}
                     onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
+                    onGenreSelected={onGenreSelectedSpy}
+                    onSortChanged={onSortChangedSpy}
     />);
 
     const movieTitle = screen.getByText('Movie 3');
@@ -113,10 +126,12 @@ describe('Content', () => {
   it('calls onMovieEdit when the edit button in a movie tile is clicked', () => {
     render(
         <Content
-            moviesList={moviesListMock}
+            data={{movieList: moviesListMock, sortBy: SortByOptions.releaseDate.value, activeGenre: 'All'}}
             onMovieSelected={onMovieSelectedSpy}
             onMovieEdit={onMovieEditSpy}
             onMovieDelete={onMovieDeleteSpy}
+            onGenreSelected={onGenreSelectedSpy}
+            onSortChanged={onSortChangedSpy}
         />
     );
 
@@ -132,10 +147,12 @@ describe('Content', () => {
   it('calls onMovieDelete when the delete button in a movie tile is clicked', () => {
     render(
         <Content
-            moviesList={moviesListMock}
+            data={{movieList: moviesListMock, sortBy: SortByOptions.releaseDate.value, activeGenre: 'All'}}
             onMovieSelected={onMovieSelectedSpy}
             onMovieEdit={onMovieEditSpy}
             onMovieDelete={onMovieDeleteSpy}
+            onGenreSelected={onGenreSelectedSpy}
+            onSortChanged={onSortChangedSpy}
         />
     );
 

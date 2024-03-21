@@ -16,13 +16,13 @@ export const Default = Template.bind({});
 Default.args = {
     movie: {
         id: 1,
-        name: "Movie Title",
-        imgUrl: "https://artofthemovies.co.uk/cdn/shop/products/IMG_2672-955819.jpg?v=1686847908",
-        genres: [GenreTitle.Horror],
-        rating: 4.5,
-        date: "2022-06-30",
-        duration: 150,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        title: "Movie Title",
+        poster_path: "https://example.com/movie-img.jpg",
+        genres: [GenreTitle.Crime],
+        release_date: "2022-06-30",
+        vote_average: 4.5,
+        runtime: 150,
+        overview: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     },
     goBackClick: () => console.log("Go back clicked"),
 };

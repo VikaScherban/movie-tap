@@ -1,30 +1,26 @@
 import './SearchForm.css';
 import {SearchData} from "../../../models/search";
-import {useState} from "react";
+import React, {useState} from "react";
 
-function SearchForm({ searchChange, initialQuery }: SearchData) {
+function SearchForm({ onSearchChanged, initialQuery }: SearchData): React.JSX.Element {
     const [formData, setFormData] = useState({
         query: initialQuery,
     });
     const onSearch = (event: any): void => {
-        searchChange(formData.query);
+        onSearchChanged(formData.query);
         event.preventDefault();
-
-        console.log('SearchForm, onSearch', formData.query);
     }
 
     const onKeyDown = (event: any): void => {
         if (event.key === 'Enter') {
-            searchChange(formData.query);
+            onSearchChanged(formData.query);
         }
     }
 
     const onQueryChange = (event: any): void => {
         const {name, value} = event.target;
 
-        setFormData((prevState) => ({...prevState, [name]: value}));
-
-        console.log('SearchForm, onQueryChange', event.target.value);
+        setFormData({...formData, [name]: value});
     }
 
     return (

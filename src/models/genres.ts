@@ -1,7 +1,7 @@
 import {GenreTitle} from "../constants/genres-const";
 
 export interface GenreData {
-    genres: GenreTitle[];
-    currentGenre: GenreTitle;
-    onGenreSelected: (genre: GenreTitle) => void;
+    genres: string[];
+    currentGenre: string;
+    onGenreSelected: (genre: string) => void;
 }

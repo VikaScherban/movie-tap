@@ -1,13 +1,9 @@
 import "./Header.css";
 import SearchForm from "./search-form/SearchForm";
+import React from "react";
+import {HeaderData} from "../../models/header";
 
-function Header({addMovie}: {addMovie: () => void}) {
-    const initialQuery = '';
-
-    const searchChange = (query: string) => {
-        console.log('searchChange', query);
-    }
-
+function Header({query, addMovie, onSearchChanged}: HeaderData): React.JSX.Element {
     return (
         <div data-testid="header-component">
             <div className="wrap-header"></div>
@@ -17,8 +13,8 @@ function Header({addMovie}: {addMovie: () => void}) {
                     <button className="add-button" onClick={addMovie}>+ ADD MOVIE</button>
                 </div>
                 <div className="middle-content">
-                    <SearchForm searchChange={searchChange}
-                                initialQuery={initialQuery}
+                    <SearchForm onSearchChanged={onSearchChanged}
+                                initialQuery={query}
                     ></SearchForm>
                 </div>
             </div>

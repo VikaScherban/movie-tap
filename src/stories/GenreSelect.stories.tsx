@@ -14,19 +14,19 @@ export const Default = Template.bind({});
 Default.args = {
     genres: Object.values(GenreTitle),
     currentGenre: GenreTitle.All,
-    onGenreSelected: (selectedGenre: GenreTitle) => console.log("Genre selected:", selectedGenre),
+    onGenreSelected: (selectedGenre: string) => console.log("Genre selected:", selectedGenre),
 };
 
 export const CurrentGenreComedy = Template.bind({});
 CurrentGenreComedy.args = {
     genres: Object.values(GenreTitle),
     currentGenre: GenreTitle.Comedy,
-    onGenreSelected: (selectedGenre: GenreTitle) => console.log("Genre selected:", selectedGenre),
+    onGenreSelected: (selectedGenre: string) => console.log("Genre selected:", selectedGenre),
 };
 
 export const CurrentGenreCrime = Template.bind({});
 CurrentGenreCrime.args = {
     genres: Object.values(GenreTitle),
     currentGenre: GenreTitle.Crime,
-    onGenreSelected: (selectedGenre: GenreTitle) => console.log("Genre selected:", selectedGenre),
+    onGenreSelected: (selectedGenre: string) => console.log("Genre selected:", selectedGenre),
 };
