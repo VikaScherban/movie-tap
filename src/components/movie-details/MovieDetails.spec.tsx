@@ -10,13 +10,13 @@ describe('MovieDetails', () => {
   beforeEach(() => {
     movieMock = {
       id: 1,
-      name: 'Example Movie',
+      title: 'Example Movie',
       genres: [GenreTitle.Horror, GenreTitle.Documentary],
-      date: '2022-01-01',
-      duration: 120,
-      rating: 8.5,
-      imgUrl: 'https://example.com/movie-poster.png',
-      description: 'This is an example movie.',
+      release_date: '2022-01-01',
+      runtime: 120,
+      vote_average: 8.5,
+      poster_path: 'https://example.com/movie-poster.png',
+      overview: 'This is an example movie.',
     };
     goBackClickSpy = jest.fn();
   });

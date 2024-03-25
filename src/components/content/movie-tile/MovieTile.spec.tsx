@@ -13,13 +13,13 @@ describe('MovieTile', () => {
     beforeEach(() => {
         movieInfoMock = {
             id: 1,
-            name: 'Example Movie',
+            title: 'Example Movie',
             genres: [GenreTitle.Comedy, GenreTitle.Documentary],
-            date: '2022-01-01',
-            imgUrl: 'https://example.com/movie-poster.png',
-            description: 'Some text',
-            duration: 345,
-            rating: 7.5,
+            release_date: '2022-01-01',
+            poster_path: 'https://example.com/movie-poster.png',
+            overview: 'Some text',
+            runtime: 345,
+            vote_average: 7.5,
         };
         onMovieSelectedSpy = jest.fn();
         onMovieEditSpy = jest.fn();

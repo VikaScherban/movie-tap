@@ -15,13 +15,13 @@ export const Default = Template.bind({});
 Default.args = {
     movieInfo: {
         id: 1,
-        name: "Movie Title",
-        imgUrl: "https://artofthemovies.co.uk/cdn/shop/products/IMG_2672-955819.jpg?v=1686847908",
+        title: "Movie Title",
+        poster_path: "https://artofthemovies.co.uk/cdn/shop/products/IMG_2672-955819.jpg?v=1686847908",
         genres: [GenreTitle.Documentary, GenreTitle.Comedy],
-        date: "2022-06-30",
-        description: 'Some text',
-        duration: 123,
-        rating: 5.7
+        release_date: "2022-06-30",
+        overview: 'Some text',
+        runtime: 123,
+        vote_average: 5.7
     },
     onMovieSelected: (id: number) => console.log("Movie selected:", id),
 };

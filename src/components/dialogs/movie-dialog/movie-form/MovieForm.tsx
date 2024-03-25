@@ -2,23 +2,23 @@ import "./MovieForm.css";
 import Select, {MultiValue} from "react-select";
 import {MovieFormData} from "../../../../models/movies";
 import {GenreTitle} from "../../../../constants/genres-const";
-import {useState} from "react";
+import React, {useState} from "react";
 
-function MovieForm({onClose, onSubmitChanges, movie}: MovieFormData) {
+function MovieForm({onClose, onSubmitChanges, movie}: MovieFormData): React.JSX.Element {
     const genreOptions = Object.values(GenreTitle).splice(1).map((genre) => ({value: genre, label: genre}));
     const currentGenresOptions = movie?.genres.map((genre) => ({value: genre, label: genre})) || [];
 
     const [formData, setFormData] = useState({
-        name: movie?.name || '',
-        imgUrl: movie?.imgUrl || '',
+        title: movie?.title || '',
+        poster_path: movie?.poster_path || '',
         genres: movie?.genres || [],
-        date: movie?.date || '',
-        rating: movie?.rating || 0,
-        duration: movie?.duration || 0,
-        description: movie?.description || ''
+        release_date: movie?.release_date || '',
+        vote_average: movie?.vote_average || 0,
+        runtime: movie?.runtime || 0,
+        overview: movie?.overview || ''
     });
 
-    const onSelectChanged = (genresOptions: MultiValue<{value: GenreTitle; label: GenreTitle;}>) => {
+    const onSelectChanged = (genresOptions: MultiValue<{value: string; label: string;}>) => {
         const value = genresOptions.map((genre) => genre.value)
 
         setFormData((prevState) => ({...prevState, 'genres': value}));
@@ -44,20 +44,20 @@ function MovieForm({onClose, onSubmitChanges, movie}: MovieFormData) {
                     <div className="movie-input">
                         <label htmlFor="movie-name">Title</label>
                         <input type="text"
-                               name="name"
+                               name="title"
                                id="movie-name"
                                data-testid="movie-name-input"
-                               onChange={onInputChanged} value={formData.name}
+                               onChange={onInputChanged} value={formData.title}
                         />
                     </div>
                     <div className="movie-input">
                         <label htmlFor="movie-img-url">Movie url</label>
                         <input type="text"
-                               name="imgUrl"
+                               name="poster_path"
                                id="movie-img-url"
                                placeholder="https://"
                                onChange={onInputChanged}
-                               value={formData.imgUrl}
+                               value={formData.poster_path}
                         />
                     </div>
                     <div className="movie-input">
@@ -76,30 +76,30 @@ function MovieForm({onClose, onSubmitChanges, movie}: MovieFormData) {
                 <div className="form-right-side">
                     <div className="movie-input">
                         <label htmlFor="movie-date">Release Date</label>
-                        <input type="date" name="date" id="movie-date" onChange={onInputChanged} value={formData.date}/>
+                        <input type="date" name="release_date" id="movie-date" onChange={onInputChanged} value={formData.release_date}/>
                     </div>
                     <div className="movie-input">
                         <label htmlFor="movie-rating">Rating</label>
-                        <input type="number" name="rating" step="0.1" id="movie-rating" onChange={onInputChanged} value={formData.rating}/>
+                        <input type="number" name="vote_average" step="0.1" id="movie-rating" onChange={onInputChanged} value={formData.vote_average}/>
                     </div>
                     <div className="movie-input">
                         <label htmlFor="movie-duration">Runtime</label>
                         <input type="number"
-                               name="duration"
+                               name="runtime"
                                placeholder="minutes"
                                id="movie-duration"
                                onChange={onInputChanged}
-                               value={formData.duration}
+                               value={formData.runtime}
                         />
                     </div>
                 </div>
                 <div className="movie-input">
                     <label htmlFor="movie-description">Overview</label>
-                    <textarea name="description"
+                    <textarea name="overview"
                               placeholder="Movie description"
                               id="movie-description"
                               onChange={onInputChanged}
-                              value={formData.description}
+                              value={formData.overview}
                     ></textarea>
                 </div>
             </div>

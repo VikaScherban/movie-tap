@@ -6,7 +6,7 @@ describe('SearchForm', () => {
   it('should renders with initial value', () => {
     const value = 'abc';
     const searchChange = jest.fn();
-    render(<SearchForm initialQuery={value} searchChange={searchChange} />);
+    render(<SearchForm initialQuery={value} onSearchChanged={searchChange} />);
 
     const from = screen.getByTestId('search-component');
     const queryInput = screen.getByDisplayValue(value);
@@ -22,7 +22,7 @@ describe('SearchForm', () => {
     const initialQuery = 'initial query';
     const newQuery = 'new query';
 
-    render(<SearchForm searchChange={searchChange} initialQuery={initialQuery} />);
+    render(<SearchForm onSearchChanged={searchChange} initialQuery={initialQuery} />);
     const form = screen.getByTestId('search-component');
     const queryInput = screen.getByRole('textbox');
 
@@ -37,7 +37,7 @@ describe('SearchForm', () => {
     const searchChange = jest.fn();
     const initialQuery = 'initial query';
 
-    render(<SearchForm searchChange={searchChange} initialQuery={initialQuery} />);
+    render(<SearchForm onSearchChanged={searchChange} initialQuery={initialQuery} />);
     const queryInput = screen.getByRole('textbox');
 
     fireEvent.keyDown(queryInput, { key: 'Enter', code: 13 });
@@ -49,7 +49,7 @@ describe('SearchForm', () => {
     const searchChange = jest.fn();
     const initialQuery = 'initial query';
 
-    render(<SearchForm searchChange={searchChange} initialQuery={initialQuery} />);
+    render(<SearchForm onSearchChanged={searchChange} initialQuery={initialQuery} />);
     const queryInput = screen.getByRole('textbox');
 
     fireEvent.keyDown(queryInput, { key: 'Alt', code: 18 });

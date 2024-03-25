@@ -1,14 +1,19 @@
 import {GenreTitle} from "../constants/genres-const";
+import MovieListPage from "../components/MovieListPage";
 
 export interface Movie {
-    name: string;
+    genres: string[];
     id: number;
-    imgUrl: string;
-    date: string;
-    genres: GenreTitle[];
-    rating: number;
-    description: string;
-    duration: number;
+    overview: string;
+    poster_path: string;
+    release_date: string;
+    runtime: number;
+    title: string;
+    vote_average: number;
+    vote_count?: number;
+    tagline?: string;
+    budget?: number;
+    revenue?: number
 }
 
 export interface MovieTileData {
@@ -35,4 +40,11 @@ export interface MovieDialogState {
     isOpen: boolean;
     title: string;
     movie: Movie | null;
+}
+
+export interface MovieListState {
+    search: string;
+    sortBy: string;
+    activeGenre: string;
+    selectedMovie: Movie | null;
 }

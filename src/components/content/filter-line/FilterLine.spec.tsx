@@ -1,19 +1,19 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import FilterLine from './FilterLine';
 import {GenreTitle} from "../../../constants/genres-const";
-import {SortByOption} from "../../../constants/sort-control-const";
+import {SortByOptions} from "../../../constants/sort-control-const";
 
 describe('FilterLine', () => {
     let currentGenreMock: GenreTitle;
     let onGenreSelectedSpy: jest.Mock<any>;
     let onSortChangedSpy: jest.Mock<any>;
-    let currentSortingMock: SortByOption;
+    let currentSortingMock: string;
 
     beforeEach(() => {
         currentGenreMock = GenreTitle.All;
         onGenreSelectedSpy= jest.fn();
         onSortChangedSpy = jest.fn();
-        currentSortingMock = SortByOption.ReleaseDate;
+        currentSortingMock = SortByOptions.releaseDate.value;
     });
 
     it('should render the filter line component', () => {
@@ -41,8 +41,8 @@ describe('FilterLine', () => {
         );
 
         const sortSelect = screen.getByTestId('sort-select');
-        fireEvent.change(sortSelect, { target: { value: SortByOption.Title } });
+        fireEvent.change(sortSelect, { target: { value: SortByOptions.title.value } });
 
-        expect(onSortChangedSpy).toHaveBeenCalledWith(SortByOption.Title);
+        expect(onSortChangedSpy).toHaveBeenCalledWith(SortByOptions.title.value);
     });
 });
