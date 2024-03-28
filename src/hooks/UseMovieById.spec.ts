@@ -1,11 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {Movie} from "../models/movies";
-import useFilteredMovieList from "./UseFilteredMovieList";
-
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useLocation: () => jest.fn(),
-}));
+import useMovieById from "./UseMovieById";
 describe('useFilteredMovieList', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -14,21 +9,18 @@ describe('useFilteredMovieList', () => {
     });
 
     it('should fetch and return movies', async () => {
-        const mockData: Movie[] = [
-            { id: 1, title: 'Movie1', genres: ['genre1'], vote_average: 3.6, runtime: 123, overview: 'Test', release_date: "10-05-2012", poster_path: 'http://test.png' },
-            { id: 2, title: 'Movie2', genres: ['genre2'], vote_average: 5.6, runtime: 234, overview: 'Test 2', release_date: "12-11-2000", poster_path: 'http://test2.png' },
-        ]
+        const mockData: Movie = { id: 2, title: 'Movie2', genres: ['genre2'], vote_average: 5.6, runtime: 234, overview: 'Test 2', release_date: "12-11-2000", poster_path: 'http://test2.png' };
 
         // @ts-ignore
         global.fetch = jest.fn(() =>
-            Promise.resolve({ ok: true, json: () => Promise.resolve({ data: mockData }) })
+            Promise.resolve({ok: true, json: () => Promise.resolve(mockData)})
         );
 
         const { result } = renderHook(() =>
-            useFilteredMovieList()
+            useMovieById(2)
         );
 
-        expect(result.current).toEqual([]);
+        expect(result.current).toEqual(null);
 
         await waitFor(() => expect(result.current).toEqual(mockData));
 
@@ -42,12 +34,12 @@ describe('useFilteredMovieList', () => {
         );
 
         const { result } = renderHook(() =>
-            useFilteredMovieList()
+            useMovieById(1)
         );
 
         await waitFor(() => expect(console.error).toBeCalled());
 
-        expect(result.current).toEqual([]);
+        expect(result.current).toEqual(null);
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expect(console.error).toBeCalledWith('Error fetching movies', new Error('HTTP error! status: 500'));
     });
@@ -55,7 +47,7 @@ describe('useFilteredMovieList', () => {
     it('should handle fetch error', async () => {
         global.fetch = jest.fn(() => Promise.reject(new Error('Fetch error')));
 
-        renderHook(() => useFilteredMovieList());
+        renderHook(() => useMovieById(3));
 
         await waitFor(() => {
             expect(console.error).toHaveBeenCalledWith('Error fetching movies', new Error('Fetch error'));

@@ -4,10 +4,15 @@ import App from './App';
 jest.mock("./hooks/UseFilteredMovieList", () => {
   return () => []
 });
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => jest.fn(),
+  useLocation: () => jest.fn(),
+}));
 
 describe('App', () => {
   it('renders', () => {
-    render(<App />);
+    render(<App/>);
 
     expect(screen.getByTestId('movie-list')).toBeInTheDocument();
   });
