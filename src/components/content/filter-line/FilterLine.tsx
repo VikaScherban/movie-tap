@@ -1,19 +1,33 @@
 import "./FilterLine.css";
 import GenreSelect from "./genre-select/GenreSelect";
 import SortControl from "./sort-control/SortControl";
-import {FilterData} from "../../../models/filter";
 import {GenreTitle} from "../../../constants/genres-const";
 import React from "react";
+import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 
-function FilterLine({currentGenre, onGenreSelected, onSortChanged, currentSorting}: FilterData): React.JSX.Element {
+function FilterLine(): React.JSX.Element {
+    const { updateQueryParams } = useMultipleSearchParams();
+    const urlSearchParams = new URLSearchParams(location.search);
+    const {genre, sort} = Object.fromEntries(urlSearchParams.entries());
+
+    const onGenreSelected = (newGenre: string): void  => {
+        const genre = newGenre === GenreTitle.All ? '' : newGenre;
+
+        updateQueryParams({genre});
+    }
+
+    const onSortChanged = (newSort: string): void => {
+        updateQueryParams({sort: newSort});
+    }
+
     return (
         <div data-testid="filter-line" className="filter-line">
             <GenreSelect
                 genres={Object.values(GenreTitle)}
-                currentGenre={currentGenre}
+                currentGenre={genre || GenreTitle.All}
                 onGenreSelected={onGenreSelected}
             ></GenreSelect>
-            <SortControl currentSorting={currentSorting} onSortChanged={onSortChanged}></SortControl>
+            <SortControl currentSorting={sort} onSortChanged={onSortChanged}></SortControl>
         </div>
     );
 }

@@ -2,15 +2,24 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import MovieTile from './MovieTile';
 import {Movie} from "../../../models/movies";
 import {GenreTitle} from "../../../constants/genres-const";
-import Mock = jest.Mock;
+import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
+
+jest.mock('../../../hooks/UseMultipleSearchParams',()  => jest.fn(() => ({})))
 
 describe('MovieTile', () => {
     let movieInfoMock: Movie;
-    let onMovieSelectedSpy: Mock<any>;
     let onMovieEditSpy: jest.Mock<any>;
     let onMovieDeleteSpy: jest.Mock<any>;
+    let updateQueryParamsSpy: jest.Mock<any>;
 
     beforeEach(() => {
+        window.scrollTo = jest.fn();
+        updateQueryParamsSpy = jest.fn();
+        // @ts-ignore
+        useMultipleSearchParams.mockReturnValue({
+            updateQueryParams: updateQueryParamsSpy
+        });
+
         movieInfoMock = {
             id: 1,
             title: 'Example Movie',
@@ -21,14 +30,12 @@ describe('MovieTile', () => {
             runtime: 345,
             vote_average: 7.5,
         };
-        onMovieSelectedSpy = jest.fn();
         onMovieEditSpy = jest.fn();
         onMovieDeleteSpy = jest.fn();
     })
 
     it('should render the movie tile component', () => {
         render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieSelected={onMovieSelectedSpy}
                           onMovieDelete={onMovieDeleteSpy}
                           onMovieEdit={onMovieEditSpy}
         />);
@@ -40,7 +47,6 @@ describe('MovieTile', () => {
 
     it('should render the movie name', () => {
         render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieSelected={onMovieSelectedSpy}
                           onMovieDelete={onMovieDeleteSpy}
                           onMovieEdit={onMovieEditSpy}
         />);
@@ -52,7 +58,6 @@ describe('MovieTile', () => {
 
     it('should render the movie genres', () => {
         render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieSelected={onMovieSelectedSpy}
                           onMovieDelete={onMovieDeleteSpy}
                           onMovieEdit={onMovieEditSpy}
         />);
@@ -64,7 +69,6 @@ describe('MovieTile', () => {
 
     it('should render the movie date', () => {
         render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieSelected={onMovieSelectedSpy}
                           onMovieDelete={onMovieDeleteSpy}
                           onMovieEdit={onMovieEditSpy}
         />);
@@ -76,7 +80,6 @@ describe('MovieTile', () => {
 
     it('should call the onMovieSelected prop when the movie poster is clicked', () => {
         render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieSelected={onMovieSelectedSpy}
                           onMovieDelete={onMovieDeleteSpy}
                           onMovieEdit={onMovieEditSpy}
         />);
@@ -84,12 +87,11 @@ describe('MovieTile', () => {
         const moviePoster = screen.getByText('Example Movie');
         fireEvent.click(moviePoster);
 
-        expect(onMovieSelectedSpy).toHaveBeenCalledWith(1);
+        expect(updateQueryParamsSpy).toHaveBeenCalledWith({}, '/1');
     });
 
     it('should call the onMovieSelected prop when the movie name is clicked', () => {
         render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieSelected={onMovieSelectedSpy}
                           onMovieDelete={onMovieDeleteSpy}
                           onMovieEdit={onMovieEditSpy}
         />);
@@ -97,14 +99,13 @@ describe('MovieTile', () => {
         const movieName = screen.getByText('Example Movie');
         fireEvent.click(movieName);
 
-        expect(onMovieSelectedSpy).toHaveBeenCalledWith(1);
+        expect(updateQueryParamsSpy).toHaveBeenCalledWith({}, '/1');
     });
 
     it('should call onMovieEdit when the "Edit" option is clicked', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
-                onMovieSelected={onMovieSelectedSpy}
                 onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />
@@ -123,7 +124,6 @@ describe('MovieTile', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
-                onMovieSelected={onMovieSelectedSpy}
                 onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />
@@ -144,7 +144,6 @@ describe('MovieTile', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
-                onMovieSelected={onMovieSelectedSpy}
                 onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />
@@ -164,7 +163,6 @@ describe('MovieTile', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
-                onMovieSelected={onMovieSelectedSpy}
                 onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />

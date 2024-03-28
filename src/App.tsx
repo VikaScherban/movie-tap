@@ -4,7 +4,7 @@ import MovieListPage from "./components/MovieListPage";
 
 function App(): React.JSX.Element  {
     return (
-        <MovieListPage></MovieListPage>
+        <MovieListPage/>
     );
 }
 

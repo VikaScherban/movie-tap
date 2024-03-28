@@ -1,6 +1,3 @@
-import {GenreTitle} from "../constants/genres-const";
-import MovieListPage from "../components/MovieListPage";
-
 export interface Movie {
     genres: string[];
     id: number;
@@ -18,12 +15,12 @@ export interface Movie {
 
 export interface MovieTileData {
     movieInfo: Movie;
-    onMovieSelected: (id: number) => void;
     onMovieEdit: (id: number) => void;
     onMovieDelete: (id: number) => void;
 }
 
 export interface MovieDialogData {
+    isOpen: boolean;
     onClose: () => void;
     onSubmitChanges: (data: Movie) => void;
     movie?: Movie | null
@@ -40,11 +37,4 @@ export interface MovieDialogState {
     isOpen: boolean;
     title: string;
     movie: Movie | null;
-}
-
-export interface MovieListState {
-    search: string;
-    sortBy: string;
-    activeGenre: string;
-    selectedMovie: Movie | null;
 }
