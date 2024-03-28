@@ -1,59 +1,59 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import SearchForm from "./SearchForm";
+import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
+jest.mock('../../../hooks/UseMultipleSearchParams', () => jest.fn());
 
 describe('SearchForm', () => {
-  it('should renders with initial value', () => {
-    const value = 'abc';
-    const searchChange = jest.fn();
-    render(<SearchForm initialQuery={value} onSearchChanged={searchChange} />);
-
-    const from = screen.getByTestId('search-component');
-    const queryInput = screen.getByDisplayValue(value);
-    const submitButton = screen.getByRole('button');
-
-    expect(from).toBeInTheDocument();
-    expect(queryInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
+  beforeEach(() => {
+    // @ts-ignore
+    useMultipleSearchParams.mockReturnValue({
+      updateQueryParams: jest.fn()
+    });
   });
 
-  it('should trigger search change on form submission', () => {
-    const searchChange = jest.fn();
-    const initialQuery = 'initial query';
-    const newQuery = 'new query';
+  it('should render the search form', () => {
+    render(<SearchForm />);
 
-    render(<SearchForm onSearchChanged={searchChange} initialQuery={initialQuery} />);
-    const form = screen.getByTestId('search-component');
-    const queryInput = screen.getByRole('textbox');
-
-    fireEvent.change(queryInput, { target: { value: newQuery } });
-    fireEvent.submit(form);
-
-    expect(searchChange).toHaveBeenCalledWith(newQuery);
-    expect(form).toHaveFormValues({ query: newQuery });
+    expect(screen.getByText('FIND YOUR MOVIE')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('What do you want to watch?')).toBeInTheDocument();
+    expect(screen.getByText('SEARCH')).toBeInTheDocument();
   });
 
-  it('should trigger search change on pressing Enter', () => {
-    const searchChange = jest.fn();
-    const initialQuery = 'initial query';
+  it('should update the form search value on input change', () => {
+    render(<SearchForm />);
 
-    render(<SearchForm onSearchChanged={searchChange} initialQuery={initialQuery} />);
-    const queryInput = screen.getByRole('textbox');
+    const queryInput = screen.getByPlaceholderText('What do you want to watch?');
+    fireEvent.change(queryInput, { target: { value: 'Action' } });
 
-    fireEvent.keyDown(queryInput, { key: 'Enter', code: 13 });
-
-    expect(searchChange).toHaveBeenCalledWith(initialQuery);
+    // @ts-ignore
+    expect(queryInput.value).toBe('Action');
   });
 
-  it('should not trigger search change on pressing Alt', () => {
-    const searchChange = jest.fn();
-    const initialQuery = 'initial query';
+  it('should call updateQueryParams when the search button is clicked', () => {
+    render(<SearchForm />);
 
-    render(<SearchForm onSearchChanged={searchChange} initialQuery={initialQuery} />);
-    const queryInput = screen.getByRole('textbox');
+    const searchButton = screen.getByRole('button', { name: 'SEARCH' });
+    fireEvent.click(searchButton);
 
-    fireEvent.keyDown(queryInput, { key: 'Alt', code: 18 });
+    expect(useMultipleSearchParams().updateQueryParams).toHaveBeenCalledWith({ search: '' });
+  });
 
-    expect(searchChange).not.toHaveBeenCalled();
+  it('should call updateQueryParams when Enter key is pressed in the input', () => {
+    render(<SearchForm />);
+
+    const queryInput = screen.getByPlaceholderText('What do you want to watch?');
+    fireEvent.keyDown(queryInput, { key: 'Enter' });
+
+    expect(useMultipleSearchParams().updateQueryParams).toHaveBeenCalledWith({ search: '' });
+  });
+
+  it('should not call updateQueryParams when Alt key is pressed in the input', () => {
+    render(<SearchForm />);
+
+    const queryInput = screen.getByPlaceholderText('What do you want to watch?');
+    fireEvent.keyDown(queryInput, { key: 'Alt' });
+
+    expect(useMultipleSearchParams().updateQueryParams).not.toHaveBeenCalledWith({ search: '' });
   });
 });

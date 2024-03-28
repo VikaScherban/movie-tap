@@ -1,20 +1,16 @@
 import {useEffect, useState} from "react";
 import {Movie} from "../models/movies";
-import {useLocation} from "react-router-dom";
 
-const useFilteredMovieList = (): Movie[] => {
-    const [movies, setMovies] = useState<Movie[]>([]);
-    const location = useLocation();
+const useMovieById = (id: number | null): Movie | null => {
+    const [movie, setMovie] = useState<Movie | null>(null);
 
     useEffect(() => {
         const controller = new AbortController();
         const signal = controller.signal;
-        const urlSearchParams = new URLSearchParams(location.search);
-        const {search, sort, genre} = Object.fromEntries(urlSearchParams.entries());
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:4000/movies?sortBy=${sort || ''}&sortOrder=asc&searchBy=title&search=${search || ''}&filter=${genre || ''}&limit=18`,
+                    `http://localhost:4000/movies/${id}`,
                     { signal }
                 );
 
@@ -24,7 +20,7 @@ const useFilteredMovieList = (): Movie[] => {
 
                 const data = await response.json();
 
-                setMovies(data.data);
+                setMovie(data);
             } catch (error: any) {
                 if (error.name === 'AbortError') {
                     console.log('Fetch aborted');
@@ -34,14 +30,16 @@ const useFilteredMovieList = (): Movie[] => {
             }
         };
 
-        fetchData();
+        if (id) {
+            fetchData();
+        }
 
         return () => {
             controller.abort();
         };
-    }, [location.search]);
+    }, [id]);
 
-    return movies;
+    return movie;
 }
 
-export default useFilteredMovieList;
+export default useMovieById;
