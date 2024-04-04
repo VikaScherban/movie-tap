@@ -1,7 +1,10 @@
 import {useEffect, useState} from "react";
 import {Movie} from "../models/movies";
+import {useParams} from "react-router-dom";
 
-const useMovieById = (id: number | null): Movie | null => {
+const useMovieById = (): Movie | null => {
+    const params = useParams();
+    const movieId = params.movieId ?  Number(params.movieId) : null;
     const [movie, setMovie] = useState<Movie | null>(null);
 
     useEffect(() => {
@@ -10,7 +13,7 @@ const useMovieById = (id: number | null): Movie | null => {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:4000/movies/${id}`,
+                    `http://localhost:4000/movies/${movieId}`,
                     { signal }
                 );
 
@@ -30,14 +33,14 @@ const useMovieById = (id: number | null): Movie | null => {
             }
         };
 
-        if (id) {
+        if (movieId) {
             fetchData();
         }
 
         return () => {
             controller.abort();
         };
-    }, [id]);
+    }, [movieId]);
 
     return movie;
 }

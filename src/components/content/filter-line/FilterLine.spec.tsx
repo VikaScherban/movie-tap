@@ -1,22 +1,21 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import FilterLine from './FilterLine';
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
+import {SortByOptions} from "../../../constants/sort-control-const";
 
-jest.mock('../../../hooks/UseMultipleSearchParams',()  => jest.fn(() => ({})))
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => jest.fn(),
-    useLocation: () => jest.fn(),
-}));
+jest.mock('../../../hooks/UseMultipleSearchParams',()  => jest.fn())
 
 describe('FilterLine', () => {
     let updateQueryParamsSpy: jest.SpyInstance;
+    let getQueryParamsSpy: jest.SpyInstance;
 
     beforeEach(() => {
         updateQueryParamsSpy = jest.fn();
+        getQueryParamsSpy = jest.fn().mockReturnValue({});
         // @ts-ignore
         useMultipleSearchParams.mockReturnValue({
-            updateQueryParams: updateQueryParamsSpy
+            updateQueryParams: updateQueryParamsSpy,
+            getQueryParams: getQueryParamsSpy,
         });
     });
 
@@ -45,5 +44,21 @@ describe('FilterLine', () => {
         fireEvent.change(sortControl, { target: { value: 'title' } });
 
         expect(updateQueryParamsSpy).toHaveBeenCalledWith({ sort: 'title' });
+    });
+
+    it('should set initial genre and sort', () => {
+        const genre = 'Comedy';
+        const sort = 'title';
+
+        getQueryParamsSpy.mockReturnValue({genre, sort});
+
+        render(<FilterLine />);
+
+        const genreOption = screen.getByText(genre);
+        const sortSelect = screen.getByTestId('sort-select');
+
+        // @ts-ignore
+        expect(sortSelect.value).toBe(SortByOptions.title.value);
+        expect(genreOption).toHaveClass('active');
     });
 });

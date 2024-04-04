@@ -2,6 +2,17 @@ import {render, fireEvent, screen} from '@testing-library/react';
 import MovieForm from './MovieForm';
 import {Movie} from "../../../../models/movies";
 import {GenreTitle} from "../../../../constants/genres-const";
+import {useForm} from "react-hook-form";
+
+jest.mock('react-hook-form', () => ({
+  useForm: jest.fn().mockReturnValue({
+    register: jest.fn(),
+    control: jest.fn(),
+    handleSubmit: jest.fn(),
+    formState: { errors: {} },
+  }),
+  Controller: jest.fn(),
+}));
 
 describe('MovieForm', () => {
   let movieMock: Movie;
@@ -19,14 +30,18 @@ describe('MovieForm', () => {
     };
   })
 
-  test('should render the movie form component with all form elements', () => {
-    const onCloseMock = jest.fn();
-    const onSubmitChangesMock = jest.fn();
+  it('should render the movie form component with all form elements', () => {
+    (useForm as jest.Mock).mockReturnValueOnce({
+      register: jest.fn(),
+      control: jest.fn(),
+      handleSubmit: jest.fn(),
+      formState: { errors: {} },
+    });
 
     render(
         <MovieForm
-            onClose={onCloseMock}
-            onSubmitChanges={onSubmitChangesMock}
+            onClose={jest.fn()}
+            onSubmitChanges={jest.fn()}
             movie={movieMock}
         />
     );
@@ -53,13 +68,19 @@ describe('MovieForm', () => {
   });
 
   it('should call onClose when the reset button is clicked', () => {
-    const onCloseMock = jest.fn();
-    const onSubmitChangesMock = jest.fn();
+    const onCloseSpy = jest.fn();
+
+    (useForm as jest.Mock).mockReturnValueOnce({
+      register: jest.fn(),
+      control: jest.fn(),
+      handleSubmit: jest.fn(),
+      formState: { errors: {} },
+    });
 
     render(
         <MovieForm
-            onClose={onCloseMock}
-            onSubmitChanges={onSubmitChangesMock}
+            onClose={onCloseSpy}
+            onSubmitChanges={jest.fn()}
             movie={movieMock}
         />
     );
@@ -67,17 +88,33 @@ describe('MovieForm', () => {
     const resetButton = screen.getByText('RESET');
     fireEvent.click(resetButton);
 
-    expect(onCloseMock).toHaveBeenCalledTimes(1);
+    expect(onCloseSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should call onSubmitChanges when the form is submitted', () => {
-    const onCloseMock = jest.fn();
-    const onSubmitChangesMock = jest.fn();
+    const onSubmitChangesSpy = jest.fn();
+    const newMovie = {
+      title: 'Test Movie',
+      runtime: 123,
+      vote_average: 6.8,
+      poster_path: 'http://img1',
+      release_date: '01.02.2002',
+      genres: [GenreTitle.Horror, GenreTitle.Documentary],
+      overview: 'Description of Test Movie',
+    };
+    const handleSubmit = jest.fn((callback) => callback(newMovie));
+
+    (useForm as jest.Mock).mockReturnValueOnce({
+      register: jest.fn(),
+      control: jest.fn(),
+      handleSubmit: handleSubmit,
+      formState: { errors: {} },
+    });
 
     render(
         <MovieForm
-            onClose={onCloseMock}
-            onSubmitChanges={onSubmitChangesMock}
+            onClose={jest.fn()}
+            onSubmitChanges={onSubmitChangesSpy}
             movie={movieMock}
         />
     );
@@ -85,6 +122,6 @@ describe('MovieForm', () => {
     const form = screen.getByTestId('movie-form');
     fireEvent.submit(form);
 
-    expect(onSubmitChangesMock).toHaveBeenCalledTimes(1);
+    expect(onSubmitChangesSpy).toHaveBeenCalledWith(newMovie);
   });
 });

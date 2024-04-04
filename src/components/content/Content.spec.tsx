@@ -11,12 +11,10 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('Content', () => {
-  let onMovieEditSpy: jest.Mock<any>;
   let onMovieDeleteSpy: jest.Mock<any>;
   let moviesListMock: Movie[];
 
   beforeEach(() => {
-    onMovieEditSpy = jest.fn();
     onMovieDeleteSpy = jest.fn();
     moviesListMock = [
       {
@@ -54,7 +52,6 @@ describe('Content', () => {
 
   it('should render the movie list', () => {
     render(<Content movieList={moviesListMock}
-                    onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
     />);
 
@@ -65,7 +62,6 @@ describe('Content', () => {
 
   it('should render the filter line', () => {
     render(<Content movieList={[]}
-                    onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
     />);
 
@@ -76,7 +72,6 @@ describe('Content', () => {
 
   it('should render the count of movies found', () => {
     render(<Content movieList={moviesListMock}
-                    onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
     />);
 
@@ -87,7 +82,6 @@ describe('Content', () => {
 
   it('should render the movie tiles based on the movies list', () => {
     render(<Content movieList={moviesListMock}
-                    onMovieEdit={onMovieEditSpy}
                     onMovieDelete={onMovieDeleteSpy}
     />);
 
@@ -96,29 +90,10 @@ describe('Content', () => {
     expect(movieTitle).toBeInTheDocument();
   });
 
-  it('calls onMovieEdit when the edit button in a movie tile is clicked', () => {
-    render(
-        <Content
-            movieList={moviesListMock}
-            onMovieEdit={onMovieEditSpy}
-            onMovieDelete={onMovieDeleteSpy}
-        />
-    );
-
-    const threeDotButtons = screen.getAllByTestId('three-dot-button');
-    fireEvent.click(threeDotButtons[0]);
-    const editButton = screen.getByText('Edit');
-    fireEvent.click(editButton);
-
-    expect(onMovieEditSpy).toHaveBeenCalledTimes(1);
-    expect(onMovieEditSpy).toHaveBeenCalledWith(0);
-  });
-
   it('calls onMovieDelete when the delete button in a movie tile is clicked', () => {
     render(
         <Content
             movieList={moviesListMock}
-            onMovieEdit={onMovieEditSpy}
             onMovieDelete={onMovieDeleteSpy}
         />
     );

@@ -3,14 +3,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import React from "react";
 import useMovieById from "../../../hooks/UseMovieById";
-import {useParams} from "react-router-dom";
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 
 function MovieDetails(): React.JSX.Element {
-    const params = useParams();
-    const movieId = params.movieId ?  Number(params.movieId) : null;
-    const movie = useMovieById(movieId);
-    const { updateQueryParams } = useMultipleSearchParams();
+    const movie = useMovieById();
+    const {navigateTo} = useMultipleSearchParams();
     const convertToHours = (totalMinutes: number) => {
         const hours = Math.floor(totalMinutes / 60);
         const minutes = totalMinutes % 60;
@@ -19,7 +16,7 @@ function MovieDetails(): React.JSX.Element {
     }
 
     const goBack = () => {
-        updateQueryParams({}, '/');
+        navigateTo('/');
     }
 
     return (

@@ -5,10 +5,16 @@ import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 jest.mock('../../../hooks/UseMultipleSearchParams', () => jest.fn());
 
 describe('SearchForm', () => {
+  let getQueryParamsSpy: jest.SpyInstance;
+  let updateQueryParamsSpy: jest.SpyInstance;
+
   beforeEach(() => {
+    getQueryParamsSpy = jest.fn().mockReturnValue({});
+    updateQueryParamsSpy = jest.fn();
     // @ts-ignore
     useMultipleSearchParams.mockReturnValue({
-      updateQueryParams: jest.fn()
+      updateQueryParams: updateQueryParamsSpy,
+      getQueryParams: getQueryParamsSpy,
     });
   });
 
@@ -36,7 +42,7 @@ describe('SearchForm', () => {
     const searchButton = screen.getByRole('button', { name: 'SEARCH' });
     fireEvent.click(searchButton);
 
-    expect(useMultipleSearchParams().updateQueryParams).toHaveBeenCalledWith({ search: '' });
+    expect(updateQueryParamsSpy).toHaveBeenCalledWith({ search: '' });
   });
 
   it('should call updateQueryParams when Enter key is pressed in the input', () => {
@@ -45,7 +51,7 @@ describe('SearchForm', () => {
     const queryInput = screen.getByPlaceholderText('What do you want to watch?');
     fireEvent.keyDown(queryInput, { key: 'Enter' });
 
-    expect(useMultipleSearchParams().updateQueryParams).toHaveBeenCalledWith({ search: '' });
+    expect(updateQueryParamsSpy).toHaveBeenCalledWith({ search: '' });
   });
 
   it('should not call updateQueryParams when Alt key is pressed in the input', () => {
@@ -54,6 +60,19 @@ describe('SearchForm', () => {
     const queryInput = screen.getByPlaceholderText('What do you want to watch?');
     fireEvent.keyDown(queryInput, { key: 'Alt' });
 
-    expect(useMultipleSearchParams().updateQueryParams).not.toHaveBeenCalledWith({ search: '' });
+    expect(updateQueryParamsSpy).not.toHaveBeenCalledWith({ search: '' });
+  });
+
+  it('should set initial search value from url', () => {
+    const text = 'Some movie';
+
+    getQueryParamsSpy.mockReturnValue({search: text});
+
+    render(<SearchForm />);
+
+    const queryInput = screen.getByPlaceholderText('What do you want to watch?');
+
+    // @ts-ignore
+    expect(queryInput.value).toBe(text);
   });
 });
