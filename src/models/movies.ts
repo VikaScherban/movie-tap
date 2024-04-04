@@ -13,27 +13,28 @@ export interface Movie {
     revenue?: number
 }
 
-// @ts-ignore
-export interface NewMovie extends Movie {
-    id?: number;
-}
-
 export interface MovieTileData {
     movieInfo: Movie;
+    onMovieEdit: (id: number) => void;
     onMovieDelete: (id: number) => void;
 }
 
 export interface MovieDialogData {
-    isEdit: boolean;
+    isOpen: boolean;
+    onClose: () => void;
+    onSubmitChanges: (data: Movie) => void;
+    movie?: Movie | null
+    title?: string;
 }
 
 export interface MovieFormData {
     onClose: () => void;
-    onSubmitChanges: (data: NewMovie) => void;
+    onSubmitChanges: (data: Movie) => void;
     movie?: Movie | null;
 }
 
-export interface SaveMovieData {
-    createMovie: (movie: NewMovie)  => Promise<void>;
-    updateMovie: (movie: Movie)  => Promise<void>;
+export interface MovieDialogState {
+    isOpen: boolean;
+    title: string;
+    movie: Movie | null;
 }

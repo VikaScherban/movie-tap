@@ -3,15 +3,14 @@ import React from 'react';
 import {Meta, StoryFn} from '@storybook/react';
 
 import MovieDetails from "../components/header/movie-details/MovieDetails";
-import {MemoryRouter} from "react-router-dom";
+import {Router} from "react-router-dom";
 
 export default {
     title: 'Components/MovieDetails',
     component: MovieDetails,
     decorators: [
-        (Story) => {
-         return (<MemoryRouter initialEntries={['/74465']}><Story /></MemoryRouter>)
-        },
+        // @ts-ignore
+        (Story) => (<Router location={'/:1'}><Story /></Router>),
     ],
 } as Meta;
 

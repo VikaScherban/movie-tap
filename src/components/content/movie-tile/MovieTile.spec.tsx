@@ -3,20 +3,21 @@ import MovieTile from './MovieTile';
 import {Movie} from "../../../models/movies";
 import {GenreTitle} from "../../../constants/genres-const";
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
-jest.mock('../../../hooks/UseMultipleSearchParams', () => jest.fn());
+
+jest.mock('../../../hooks/UseMultipleSearchParams',()  => jest.fn(() => ({})))
 
 describe('MovieTile', () => {
     let movieInfoMock: Movie;
     let onMovieEditSpy: jest.Mock<any>;
     let onMovieDeleteSpy: jest.Mock<any>;
-    let navigateToSpy: jest.Mock<any>;
+    let updateQueryParamsSpy: jest.Mock<any>;
 
     beforeEach(() => {
         window.scrollTo = jest.fn();
-        navigateToSpy = jest.fn();
+        updateQueryParamsSpy = jest.fn();
         // @ts-ignore
         useMultipleSearchParams.mockReturnValue({
-            navigateTo: navigateToSpy
+            updateQueryParams: updateQueryParamsSpy
         });
 
         movieInfoMock = {
@@ -36,6 +37,7 @@ describe('MovieTile', () => {
     it('should render the movie tile component', () => {
         render(<MovieTile movieInfo={movieInfoMock}
                           onMovieDelete={onMovieDeleteSpy}
+                          onMovieEdit={onMovieEditSpy}
         />);
 
         const movieTile = screen.getByTestId('movie-card-1');
@@ -46,6 +48,7 @@ describe('MovieTile', () => {
     it('should render the movie name', () => {
         render(<MovieTile movieInfo={movieInfoMock}
                           onMovieDelete={onMovieDeleteSpy}
+                          onMovieEdit={onMovieEditSpy}
         />);
 
         const movieName = screen.getByText('Example Movie');
@@ -56,6 +59,7 @@ describe('MovieTile', () => {
     it('should render the movie genres', () => {
         render(<MovieTile movieInfo={movieInfoMock}
                           onMovieDelete={onMovieDeleteSpy}
+                          onMovieEdit={onMovieEditSpy}
         />);
 
         const movieGenres = screen.getByText('Comedy, Documentary');
@@ -66,6 +70,7 @@ describe('MovieTile', () => {
     it('should render the movie date', () => {
         render(<MovieTile movieInfo={movieInfoMock}
                           onMovieDelete={onMovieDeleteSpy}
+                          onMovieEdit={onMovieEditSpy}
         />);
 
         const movieDate = screen.getByText('2022-01-01');
@@ -76,29 +81,32 @@ describe('MovieTile', () => {
     it('should call the onMovieSelected prop when the movie poster is clicked', () => {
         render(<MovieTile movieInfo={movieInfoMock}
                           onMovieDelete={onMovieDeleteSpy}
+                          onMovieEdit={onMovieEditSpy}
         />);
 
         const moviePoster = screen.getByText('Example Movie');
         fireEvent.click(moviePoster);
 
-        expect(navigateToSpy).toHaveBeenCalledWith('/1');
+        expect(updateQueryParamsSpy).toHaveBeenCalledWith({}, '/1');
     });
 
     it('should call the onMovieSelected prop when the movie name is clicked', () => {
         render(<MovieTile movieInfo={movieInfoMock}
                           onMovieDelete={onMovieDeleteSpy}
+                          onMovieEdit={onMovieEditSpy}
         />);
 
         const movieName = screen.getByText('Example Movie');
         fireEvent.click(movieName);
 
-        expect(navigateToSpy).toHaveBeenCalledWith( '/1');
+        expect(updateQueryParamsSpy).toHaveBeenCalledWith({}, '/1');
     });
 
     it('should call onMovieEdit when the "Edit" option is clicked', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
+                onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />
         );
@@ -108,13 +116,15 @@ describe('MovieTile', () => {
         const editOption = screen.getByText('Edit');
         fireEvent.click(editOption);
 
-        expect(navigateToSpy).toHaveBeenCalledWith( '/1/edit');
+        expect(onMovieEditSpy).toHaveBeenCalledTimes(1);
+        expect(onMovieEditSpy).toHaveBeenCalledWith(movieInfoMock.id);
     });
 
     it('should call onMovieDelete when the "Delete" option is clicked', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
+                onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />
         );
@@ -134,6 +144,7 @@ describe('MovieTile', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
+                onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />
         );
@@ -152,6 +163,7 @@ describe('MovieTile', () => {
         render(
             <MovieTile
                 movieInfo={movieInfoMock}
+                onMovieEdit={onMovieEditSpy}
                 onMovieDelete={onMovieDeleteSpy}
             />
         );

@@ -1,9 +1,9 @@
 import {useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {UrlQueries} from "../constants/url-queries-const";
-import {MultipleSearchParams} from "../models/search";
+import {UpdateQuery} from "../models/search";
 
-const useMultipleSearchParams = (): MultipleSearchParams => {
+const useMultipleSearchParams = (): {updateQueryParams: UpdateQuery} => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -18,13 +18,7 @@ const useMultipleSearchParams = (): MultipleSearchParams => {
         }
     }, [location.search]);
 
-    const getQueryParams = (): {[key: string]: string} => {
-        const urlSearchParams = new URLSearchParams(location.search);
-
-        return Object.fromEntries(urlSearchParams.entries());
-    }
-
-    const updateQueryParams = (params: {[key in UrlQueries]?: string}) => {
+    const updateQueryParams = (params: {[key in UrlQueries]?: string}, pathname?: string) => {
         const searchParams = new URLSearchParams(location.search);
 
         Object.keys(params).forEach((key) => {
@@ -33,21 +27,12 @@ const useMultipleSearchParams = (): MultipleSearchParams => {
         });
 
         navigate({
-            pathname: location.pathname,
+            pathname: pathname || location.pathname,
             search: `?${searchParams.toString()}`,
         });
     };
 
-    const navigateTo = (path: string): void => {
-        const searchParams = new URLSearchParams(location.search);
-
-        navigate({
-            pathname: path,
-            search: `?${searchParams.toString()}`,
-        });
-    }
-
-    return { updateQueryParams, getQueryParams, navigateTo };
+    return { updateQueryParams };
 };
 
 export default useMultipleSearchParams;

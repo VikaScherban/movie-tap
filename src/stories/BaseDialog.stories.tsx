@@ -17,4 +17,5 @@ const Template: StoryFn<typeof BaseDialog> = (args) => <BaseDialog {...args}>
 export const Default = Template.bind({});
 Default.args = {
     title: "Dialog Title",
+    onClose: () => console.log("Dialog closed"),
 };

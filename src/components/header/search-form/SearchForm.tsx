@@ -1,11 +1,11 @@
 import './SearchForm.css';
 import React, {useState} from "react";
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
-import {Outlet} from "react-router-dom";
 
 function SearchForm(): React.JSX.Element {
-    const { updateQueryParams, getQueryParams } = useMultipleSearchParams();
-    const {search} = getQueryParams();
+    const { updateQueryParams } = useMultipleSearchParams();
+    const urlSearchParams = new URLSearchParams(location.search);
+    const {search} = Object.fromEntries(urlSearchParams.entries());
     const [formSearch, updateFormSearch] =  useState(search || '');
     const onSearch = (event: any): void => {
         updateQueryParams({search: formSearch});
@@ -23,22 +23,19 @@ function SearchForm(): React.JSX.Element {
     }
 
     return (
-        <>
-            <form className="wrap-block" onSubmit={onSearch} data-testid="search-component">
-                <div className="label">FIND YOUR MOVIE</div>
-                <input type="text"
-                       name="query"
-                       value={formSearch}
-                       onChange={onQueryChange}
-                       onKeyDown={onKeyDown}
-                       className="search-input"
-                       placeholder='What do you want to watch?'
-                />
-                <button type="submit" className="search-button">SEARCH</button>
-            </form>
-            <Outlet/>
-        </>
-    );
+      <form className="wrap-block" onSubmit={onSearch} data-testid="search-component">
+          <div className="label">FIND YOUR MOVIE</div>
+          <input type="text"
+                 name="query"
+                 value={formSearch}
+                 onChange={onQueryChange}
+                 onKeyDown={onKeyDown}
+                 className="search-input"
+                 placeholder='What do you want to watch?'
+          />
+          <button type="submit" className="search-button">SEARCH</button>
+      </form>
+  );
 }
 
 export default SearchForm;

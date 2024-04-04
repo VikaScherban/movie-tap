@@ -1,106 +1,106 @@
 import "./MovieForm.css";
-import Select from "react-select";
-import {Movie, MovieFormData, NewMovie} from "../../../../models/movies";
+import Select, {MultiValue} from "react-select";
+import {MovieFormData} from "../../../../models/movies";
 import {GenreTitle} from "../../../../constants/genres-const";
-import React from "react";
-import {SubmitHandler, useForm, Controller} from "react-hook-form";
-
-interface IFormInput extends Movie {
-    genreOptions: { label: string; value: string }[]
-}
+import React, {useState} from "react";
 
 function MovieForm({onClose, onSubmitChanges, movie}: MovieFormData): React.JSX.Element {
     const genreOptions = Object.values(GenreTitle).splice(1).map((genre) => ({value: genre, label: genre}));
     const currentGenresOptions = movie?.genres.map((genre) => ({value: genre, label: genre})) || [];
 
-    const {register, control, handleSubmit, formState: { errors }} = useForm<IFormInput>({
-        defaultValues: {
-            title: movie?.title || '',
-            poster_path: movie?.poster_path || '',
-            genres: movie?.genres || [],
-            release_date: movie?.release_date || '',
-            vote_average: movie?.vote_average || 0,
-            runtime: movie?.runtime || 0,
-            overview: movie?.overview || ''
-        }
+    const [formData, setFormData] = useState({
+        title: movie?.title || '',
+        poster_path: movie?.poster_path || '',
+        genres: movie?.genres || [],
+        release_date: movie?.release_date || '',
+        vote_average: movie?.vote_average || 0,
+        runtime: movie?.runtime || 0,
+        overview: movie?.overview || ''
     });
 
-    const onSubmit: SubmitHandler<IFormInput> = (data: NewMovie) => {
-        onSubmitChanges({...data, runtime: +data.runtime, vote_average: +data.vote_average});
+    const onSelectChanged = (genresOptions: MultiValue<{value: string; label: string;}>) => {
+        const value = genresOptions.map((genre) => genre.value)
+
+        setFormData((prevState) => ({...prevState, 'genres': value}));
+    }
+
+    const onInputChanged = (event: any) => {
+        const {name, value} = event.target;
+
+        setFormData((prevState) => ({...prevState, [name]: value}));
+    }
+
+    const onSubmit = (event: any) => {
+        event.preventDefault();
+
+        onSubmitChanges({...formData, id: movie?.id || Date.now()});
+        console.log('MovieDialog data', formData);
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} data-testid="movie-form">
+        <form onSubmit={onSubmit} data-testid="movie-form">
             <div>
                 <div className="form-left-side">
                     <div className="movie-input">
                         <label htmlFor="movie-name">Title</label>
                         <input type="text"
+                               name="title"
                                id="movie-name"
                                data-testid="movie-name-input"
-                               {...register('title', { required: true })}
+                               onChange={onInputChanged} value={formData.title}
                         />
-                        {errors.title && <span className="error-message">This is required</span>}
                     </div>
                     <div className="movie-input">
                         <label htmlFor="movie-img-url">Movie url</label>
                         <input type="text"
+                               name="poster_path"
                                id="movie-img-url"
                                placeholder="https://"
-                               {...register('poster_path', { required: true })}
+                               onChange={onInputChanged}
+                               value={formData.poster_path}
                         />
-                        {errors.poster_path && <span className="error-message">This is required</span>}
                     </div>
                     <div className="movie-input">
                         <label htmlFor="movie-genres">Genre</label>
-                        <Controller
+                        <Select
+                            className="genre-select"
                             name="genres"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({field: {onChange, value}}) => (
-                                <Select
-                                    onChange={(val) => onChange(val.map((c) => c.value))}
-                                    value={genreOptions.filter(c => value.includes(c.value))}
-                                    name="genres"
-                                    className="genre-select"
-                                    id="movie-genres"
-                                    isMulti
-                                    defaultValue={currentGenresOptions}
-                                    options={genreOptions}
-                                />
-                            )}
+                            id="movie-genres"
+                            options={genreOptions}
+                            isMulti
+                            defaultValue={currentGenresOptions}
+                            onChange={onSelectChanged}
                         />
-                        {errors.genres && <span className="error-message">This is required</span>}
                     </div>
                 </div>
                 <div className="form-right-side">
                     <div className="movie-input">
                         <label htmlFor="movie-date">Release Date</label>
-                        <input type="date" id="movie-date" {...register('release_date', { required: true })}/>
-                        {errors.release_date && <span className="error-message">This is required</span>}
+                        <input type="date" name="release_date" id="movie-date" onChange={onInputChanged} value={formData.release_date}/>
                     </div>
                     <div className="movie-input">
                         <label htmlFor="movie-rating">Rating</label>
-                        <input type="number" step="0.1" id="movie-rating" {...register('vote_average', { required: true, min: 1 })}/>
-                        {errors.vote_average && <span className="error-message">This is required and {'>'} 0</span>}
+                        <input type="number" name="vote_average" step="0.1" id="movie-rating" onChange={onInputChanged} value={formData.vote_average}/>
                     </div>
                     <div className="movie-input">
                         <label htmlFor="movie-duration">Runtime</label>
                         <input type="number"
+                               name="runtime"
                                placeholder="minutes"
                                id="movie-duration"
-                               {...register('runtime', { required: true, min: 1 })}
+                               onChange={onInputChanged}
+                               value={formData.runtime}
                         />
-                        {errors.runtime && <span className="error-message">This is required and {'>'} 0</span>}
                     </div>
                 </div>
                 <div className="movie-input">
                     <label htmlFor="movie-description">Overview</label>
-                    <textarea placeholder="Movie description"
+                    <textarea name="overview"
+                              placeholder="Movie description"
                               id="movie-description"
-                              {...register('overview', { required: true })}
+                              onChange={onInputChanged}
+                              value={formData.overview}
                     ></textarea>
-                    {errors.overview && <span className="error-message">This is required</span>}
                 </div>
             </div>
             <div className="movie-dialog-footer">

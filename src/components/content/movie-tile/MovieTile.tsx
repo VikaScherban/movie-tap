@@ -6,10 +6,10 @@ import React, {useState} from "react";
 import BaseDialog from "../../dialogs/base-dialog/BaseDialog";
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 
-function MovieTile({movieInfo, onMovieDelete}: MovieTileData): React.JSX.Element {
+function MovieTile({movieInfo, onMovieEdit, onMovieDelete}: MovieTileData): React.JSX.Element {
     const [isMenuOpen, setOpenMenu] = useState(false);
     const [isDeleteDialogOpen, setOpenDeleteDialog] = useState(false);
-    const {navigateTo} = useMultipleSearchParams();
+    const { updateQueryParams } = useMultipleSearchParams();
 
     const onEditClick = (event: any): void => {
         event.stopPropagation();
@@ -24,8 +24,7 @@ function MovieTile({movieInfo, onMovieDelete}: MovieTileData): React.JSX.Element
     const onEditMovie = (event:any): void => {
         event.stopPropagation();
         setOpenMenu(false);
-
-        navigateTo(`/${movieInfo.id}/edit`);
+        onMovieEdit(movieInfo.id);
     }
 
     const onDeleteMovie = (event:any): void => {
@@ -46,7 +45,7 @@ function MovieTile({movieInfo, onMovieDelete}: MovieTileData): React.JSX.Element
     }
 
     const onMovieSelected = (id: number): void => {
-        navigateTo(`/${id}`);
+        updateQueryParams({}, `/${id}`);
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 

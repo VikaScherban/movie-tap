@@ -1,34 +1,15 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {Movie} from "../models/movies";
 import useMovieById from "./UseMovieById";
-import {useParams} from "react-router-dom";
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useParams: jest.fn()
-}));
-
 describe('useFilteredMovieList', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         console.error = jest.fn();
         console.log = jest.fn();
-
-        (useParams as jest.Mock).mockReturnValue({
-            movieId: '1'
-        });
     });
 
     it('should fetch and return movies', async () => {
-        const mockData: Movie = {
-            id: 2,
-            title: 'Movie2',
-            genres: ['genre2'],
-            vote_average: 5.6,
-            runtime: 234,
-            overview: 'Test 2',
-            release_date: "12-11-2000",
-            poster_path: 'http://test2.png'
-        };
+        const mockData: Movie = { id: 2, title: 'Movie2', genres: ['genre2'], vote_average: 5.6, runtime: 234, overview: 'Test 2', release_date: "12-11-2000", poster_path: 'http://test2.png' };
 
         // @ts-ignore
         global.fetch = jest.fn(() =>
@@ -36,7 +17,7 @@ describe('useFilteredMovieList', () => {
         );
 
         const { result } = renderHook(() =>
-            useMovieById()
+            useMovieById(2)
         );
 
         expect(result.current).toEqual(null);
@@ -53,7 +34,7 @@ describe('useFilteredMovieList', () => {
         );
 
         const { result } = renderHook(() =>
-            useMovieById()
+            useMovieById(1)
         );
 
         await waitFor(() => expect(console.error).toBeCalled());
@@ -66,7 +47,7 @@ describe('useFilteredMovieList', () => {
     it('should handle fetch error', async () => {
         global.fetch = jest.fn(() => Promise.reject(new Error('Fetch error')));
 
-        renderHook(() => useMovieById());
+        renderHook(() => useMovieById(3));
 
         await waitFor(() => {
             expect(console.error).toHaveBeenCalledWith('Error fetching movies', new Error('Fetch error'));
