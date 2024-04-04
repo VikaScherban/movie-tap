@@ -1,26 +1,25 @@
 import './SearchForm.css';
-import {SearchData} from "../../../models/search";
 import React, {useState} from "react";
+import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 
-function SearchForm({ onSearchChanged, initialQuery }: SearchData): React.JSX.Element {
-    const [formData, setFormData] = useState({
-        query: initialQuery,
-    });
+function SearchForm(): React.JSX.Element {
+    const { updateQueryParams } = useMultipleSearchParams();
+    const urlSearchParams = new URLSearchParams(location.search);
+    const {search} = Object.fromEntries(urlSearchParams.entries());
+    const [formSearch, updateFormSearch] =  useState(search || '');
     const onSearch = (event: any): void => {
-        onSearchChanged(formData.query);
+        updateQueryParams({search: formSearch});
         event.preventDefault();
     }
 
     const onKeyDown = (event: any): void => {
         if (event.key === 'Enter') {
-            onSearchChanged(formData.query);
+            updateQueryParams({search: formSearch});
         }
     }
 
     const onQueryChange = (event: any): void => {
-        const {name, value} = event.target;
-
-        setFormData({...formData, [name]: value});
+        updateFormSearch(event.target.value || '');
     }
 
     return (
@@ -28,7 +27,7 @@ function SearchForm({ onSearchChanged, initialQuery }: SearchData): React.JSX.El
           <div className="label">FIND YOUR MOVIE</div>
           <input type="text"
                  name="query"
-                 value={formData.query}
+                 value={formSearch}
                  onChange={onQueryChange}
                  onKeyDown={onKeyDown}
                  className="search-input"

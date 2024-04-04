@@ -4,13 +4,38 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './fonts/Montserrat/Montserrat-VariableFont_wght.ttf';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import ErrorPage from "./components/ErrorPage";
+import MovieListPage from "./components/MovieListPage";
+import Header from "./components/header/Header";
+import HeaderWithSearch from "./components/header/header-with-search/HeaderWithSearch";
+import MovieDetails from "./components/header/movie-details/MovieDetails";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App/>,
+        errorElement: <ErrorPage/>,
+        children: [
+            {
+                path: '/',
+                element: <HeaderWithSearch/>
+            },
+            {
+                path: '/:movieId',
+                element: <MovieDetails/>
+            }
+        ],
+    },
+]);
+
 root.render(
   <React.StrictMode>
-    <App />
+      <RouterProvider router={router}/>
   </React.StrictMode>
 );
 

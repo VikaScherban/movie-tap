@@ -3,10 +3,15 @@ import React from 'react';
 import {Meta, StoryFn} from '@storybook/react';
 import MovieTile from "../components/content/movie-tile/MovieTile";
 import {GenreTitle} from "../constants/genres-const";
+import {Router} from "react-router-dom";
 
 export default {
     title: 'Components/MovieTile',
     component: MovieTile,
+    decorators: [
+        // @ts-ignore
+        (Story) => (<Router location={'/:1'}><Story /></Router>),
+    ],
 } as Meta;
 
 const Template: StoryFn<typeof MovieTile> = (args) => <MovieTile {...args} />;
@@ -23,5 +28,4 @@ Default.args = {
         runtime: 123,
         vote_average: 5.7
     },
-    onMovieSelected: (id: number) => console.log("Movie selected:", id),
 };

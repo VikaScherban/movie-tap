@@ -26,6 +26,7 @@ describe('MovieDialog', () => {
 
     render(
         <MovieDialog
+            isOpen={true}
             onClose={onCloseMock}
             onSubmitChanges={onSubmitChangesMock}
             title={title}
@@ -42,6 +43,26 @@ describe('MovieDialog', () => {
     expect(movieForm).toBeInTheDocument();
   });
 
+  it('should not render the movie dialog component when it is closed', () => {
+    const onCloseMock = jest.fn();
+    const onSubmitChangesMock = jest.fn();
+    const title = 'Edit Movie';
+
+    render(
+        <MovieDialog
+            isOpen={false}
+            onClose={onCloseMock}
+            onSubmitChanges={onSubmitChangesMock}
+            title={title}
+            movie={movieMock}
+        />
+    );
+
+    expect(screen.queryByTestId('dialog')).not.toBeInTheDocument();
+    expect(screen.queryByText(title)).not.toBeInTheDocument();
+    expect(screen.queryByTestId('movie-form')).not.toBeInTheDocument();
+  });
+
   it('should call onClose when the dialog close button is clicked', () => {
     const onCloseMock = jest.fn();
     const onSubmitChangesMock = jest.fn();
@@ -49,6 +70,7 @@ describe('MovieDialog', () => {
 
     render(
         <MovieDialog
+            isOpen={true}
             onClose={onCloseMock}
             onSubmitChanges={onSubmitChangesMock}
             title={title}
@@ -69,6 +91,7 @@ describe('MovieDialog', () => {
 
     render(
         <MovieDialog
+            isOpen={true}
             onClose={onCloseMock}
             onSubmitChanges={onSubmitChangesMock}
             title={title}

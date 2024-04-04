@@ -4,10 +4,12 @@ import {faEllipsisV, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, {useState} from "react";
 import BaseDialog from "../../dialogs/base-dialog/BaseDialog";
+import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 
-function MovieTile({movieInfo, onMovieSelected, onMovieEdit, onMovieDelete}: MovieTileData): React.JSX.Element {
+function MovieTile({movieInfo, onMovieEdit, onMovieDelete}: MovieTileData): React.JSX.Element {
     const [isMenuOpen, setOpenMenu] = useState(false);
     const [isDeleteDialogOpen, setOpenDeleteDialog] = useState(false);
+    const { updateQueryParams } = useMultipleSearchParams();
 
     const onEditClick = (event: any): void => {
         event.stopPropagation();
@@ -40,6 +42,11 @@ function MovieTile({movieInfo, onMovieSelected, onMovieEdit, onMovieDelete}: Mov
         event.stopPropagation();
         setOpenDeleteDialog(false);
         onMovieDelete(movieInfo.id)
+    }
+
+    const onMovieSelected = (id: number): void => {
+        updateQueryParams({}, `/${id}`);
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     return (

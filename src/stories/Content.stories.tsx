@@ -2,21 +2,22 @@ import React from 'react';
 import {Meta, StoryFn} from '@storybook/react';
 import Content from "../components/content/Content";
 import {GenreTitle} from "../constants/genres-const";
-import {SortByOptions} from "../constants/sort-control-const";
+import {Router} from "react-router-dom";
 
 export default {
     title: 'Components/Content',
     component: Content,
+    decorators: [
+        // @ts-ignore
+        (Story) => (<Router location={'/'}><Story /></Router>),
+    ],
 } as Meta;
 
 const Template: StoryFn<typeof Content> = (args) => <Content {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    data: {
-        sortBy: SortByOptions.releaseDate.value,
-        activeGenre: 'Comedy',
-        movieList: [
+    movieList: [
             {
                 id: 0,
                 poster_path: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg?ts=1636999411',
@@ -47,7 +48,5 @@ Default.args = {
                 runtime: 154,
                 overview: 'Jules Winnfield (Samuel L. Jackson) and Vincent Vega (John Travolta) are two hit men who are out to retrieve a suitcase stolen from their employer, mob boss Marsellus Wallace (Ving Rhames). Wallace has also asked Vincent to take his wife Mia (Uma Thurman) out a few days later when Wallace himself will be out of town. Butch Coolidge (Bruce Willis) is an aging boxer who is paid by Wallace to lose his fight. The lives of these seemingly unrelated people are woven together comprising of a series of funny, bizarre and uncalled-for incidents.—Soumitra',
             },
-        ]
-    },
-    onMovieSelected: (id: number) => console.log("Movie selected:", id),
+    ],
 };
