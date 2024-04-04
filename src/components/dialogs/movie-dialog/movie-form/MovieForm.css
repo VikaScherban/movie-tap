@@ -37,6 +37,10 @@
     margin-bottom: 50px;
 }
 
+.movie-input {
+    position: relative;
+}
+
 .movie-input label {
     display: block;
     text-transform: uppercase;
@@ -67,4 +71,10 @@
 
 .genre-select div[class$="menu"] {
     background-color: #323232;
+}
+
+.error-message {
+    position: absolute;
+    top: 90px;
+    left: 0;
 }

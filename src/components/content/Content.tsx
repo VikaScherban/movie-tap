@@ -4,7 +4,7 @@ import MovieTile from "./movie-tile/MovieTile";
 import {ContentData} from "../../models/content";
 import React from "react";
 
-function Content({movieList, onMovieEdit, onMovieDelete}: ContentData): React.JSX.Element {
+function Content({movieList, onMovieDelete}: ContentData): React.JSX.Element {
     return (
         <div className="wrap-content" data-testid="movie-list">
             <FilterLine/>
@@ -13,7 +13,6 @@ function Content({movieList, onMovieEdit, onMovieDelete}: ContentData): React.JS
                 {movieList?.map((movieInfo) => (
                     <MovieTile key={movieInfo.id}
                                movieInfo={movieInfo}
-                               onMovieEdit={onMovieEdit}
                                onMovieDelete={onMovieDelete}
                     />
                 ))}

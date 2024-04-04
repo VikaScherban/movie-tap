@@ -3,3 +3,8 @@ export enum UrlQueries {
     Genre = 'genre',
     Sort = 'sort'
 }
+
+export enum MovieStatus {
+    Loading,
+    Ready
+}
