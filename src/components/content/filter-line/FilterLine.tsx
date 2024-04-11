@@ -5,10 +5,10 @@ import {GenreTitle} from "../../../constants/genres-const";
 import React from "react";
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 
+
 function FilterLine(): React.JSX.Element {
-    const { updateQueryParams } = useMultipleSearchParams();
-    const urlSearchParams = new URLSearchParams(location.search);
-    const {genre, sort} = Object.fromEntries(urlSearchParams.entries());
+    const {updateQueryParams, getQueryParams} = useMultipleSearchParams();
+    const {genre, sort} = getQueryParams();
 
     const onGenreSelected = (newGenre: string): void  => {
         const genre = newGenre === GenreTitle.All ? '' : newGenre;

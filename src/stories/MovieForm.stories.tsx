@@ -12,14 +12,12 @@ const Template: StoryFn<typeof MovieForm> = (args) => <MovieForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    onClose: () => console.log("Dialog closed"),
     onSubmitChanges: (data) => console.log("Changes submitted:", data),
     movie: null,
 };
 
 export const FormWithMovie = Template.bind({});
 FormWithMovie.args = {
-    onClose: () => console.log("Dialog closed"),
     onSubmitChanges: (data) => console.log("Changes submitted:", data),
     movie: {
         id: 1,

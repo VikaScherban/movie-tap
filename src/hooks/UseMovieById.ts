@@ -1,8 +1,15 @@
 import {useEffect, useState} from "react";
 import {Movie} from "../models/movies";
+import {useParams} from "react-router-dom";
+import {MovieStatus} from "../constants/url-queries-const";
 
-const useMovieById = (id: number | null): Movie | null => {
-    const [movie, setMovie] = useState<Movie | null>(null);
+const useMovieById = (): {movie: Movie | null, status: MovieStatus} => {
+    const params = useParams();
+    const movieId = params.movieId ?  Number(params.movieId) : null;
+    const [result, setResult] = useState<{movie: Movie | null, status: MovieStatus}>({
+        movie: null,
+        status: movieId ? MovieStatus.Loading : MovieStatus.Ready
+    });
 
     useEffect(() => {
         const controller = new AbortController();
@@ -10,7 +17,7 @@ const useMovieById = (id: number | null): Movie | null => {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:4000/movies/${id}`,
+                    `http://localhost:4000/movies/${movieId}`,
                     { signal }
                 );
 
@@ -20,7 +27,7 @@ const useMovieById = (id: number | null): Movie | null => {
 
                 const data = await response.json();
 
-                setMovie(data);
+                setResult({movie: data, status: MovieStatus.Ready});
             } catch (error: any) {
                 if (error.name === 'AbortError') {
                     console.log('Fetch aborted');
@@ -30,16 +37,16 @@ const useMovieById = (id: number | null): Movie | null => {
             }
         };
 
-        if (id) {
+        if (movieId) {
             fetchData();
         }
 
         return () => {
             controller.abort();
         };
-    }, [id]);
+    }, [movieId]);
 
-    return movie;
+    return result;
 }
 
 export default useMovieById;

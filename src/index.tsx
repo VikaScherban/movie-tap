@@ -6,10 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import './fonts/Montserrat/Montserrat-VariableFont_wght.ttf';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
-import MovieListPage from "./components/MovieListPage";
-import Header from "./components/header/Header";
 import HeaderWithSearch from "./components/header/header-with-search/HeaderWithSearch";
 import MovieDetails from "./components/header/movie-details/MovieDetails";
+import MovieDialog from "./components/dialogs/movie-dialog/MovieDialog";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,11 +22,19 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <HeaderWithSearch/>
+                element: <HeaderWithSearch/>,
+                children: [{
+                    path: '/new',
+                    element: <MovieDialog/>
+                }],
             },
             {
                 path: '/:movieId',
-                element: <MovieDetails/>
+                element: <MovieDetails/>,
+            },
+            {
+                path: '/:movieId/edit',
+                element: <MovieDialog/>
             }
         ],
     },
