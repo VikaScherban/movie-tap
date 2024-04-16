@@ -1,0 +1,498 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #424242;
+}
+
+button:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.genres-list {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.genre-tab {
+    list-style: none;
+    display: inline-block;
+    padding: 15px;
+    color: #fff;
+}
+
+.genre-tab.active {
+    border-bottom: 1px solid #F65261;
+}
+
+.genre-tab:hover {
+    cursor: pointer;
+    border-bottom: 1px solid #F65261;
+}
+
+.sort-by-block {
+    display: inline-block;
+    padding: 15px;
+}
+
+.sort-by-button, .release-date-select {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.release-date-select option:not(:checked) {
+    color: black;
+}
+
+.sort-by-block {
+    display: inline-block;
+    padding: 15px;
+}
+
+.sort-by-text, .sort-by-dropdown {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.sort-by-dropdown option:not(:checked) {
+    color: black;
+}
+
+.sort-by-dropdown {
+    margin-left: 15px;
+    text-transform: uppercase;
+}
+
+.sort-by-dropdown:focus-visible {
+    outline: none;
+}
+
+.filter-line {
+    border-bottom: 1px solid #080707;
+    display: flex;
+    justify-content: space-between;
+}
+
+.movie-card {
+    display: inline-block;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 56px;
+    cursor: pointer;
+    width: 322px;
+}
+
+.movie-poster {
+    position: relative;
+    min-height: 465px;
+}
+
+.movie-poster img {
+    width: 322px;
+    height: 455px;
+}
+
+.movie-info {
+    color: #b0b0b0;
+    font-weight: 300;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 21px;
+}
+
+.movie-name {
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.movie-genres {
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+.movie-date {
+    font-size: 14px;
+    border: 1px solid #b0b0b0;
+    border-radius: 5px;
+    height: 18px;
+    padding: 4px 8px;
+    font-weight: 500;
+    min-width: 74px;
+    text-align: center;
+}
+
+.three-dot-button {
+    background-color: #2A202D;
+    border-radius: 50%;
+    border: none;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    height: 36px;
+    width: 36px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.edit-movie-menu {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: #232323;
+    width: 170px;
+    padding-top: 20px;
+}
+
+.edit-movie-option {
+    padding: 6px 20px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.edit-movie-option:hover {
+    background-color: #F65261;
+}
+
+.edit-movie-close-button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 300;
+    color: #fff;
+    float: right;
+    margin-top: -15px;
+}
+
+.confirm-message {
+    margin-bottom: 30px;
+}
+
+.wrap-content {
+    background-color: #232323;
+    padding: 0 58px 20px 58px;
+    margin-top: 10px;
+}
+
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.count-result {
+    color: #fff;
+    padding-top: 24px;
+}
+
+.dialog-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.dialog-content {
+    padding: 50px 55px;
+    background-color: #232323;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.dialog-title {
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 300;
+    display: inline-block;
+}
+
+.dialog-close-button {
+    color: #fff;
+    background: none;
+    border: none;
+    font-size: 22px;
+    font-weight: 300;
+    text-align: right;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+.dialog-form {
+    padding-top: 40px;
+}
+
+.reset-button, .submit-button {
+    border-radius: 5px;
+    padding: 16px 57px;
+}
+
+.reset-button {
+    background-color: #232323;
+    border: 1px solid #F65261;
+    color: #F65261;
+}
+
+.submit-button {
+    background-color: #F65261;
+    color: #fff;
+    border: none;
+    margin-left: 13px;
+}
+
+.form-left-side, .form-right-side {
+    display: inline-block;
+    font-weight: 300;
+}
+
+.form-left-side {
+    width: 70%;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+.form-right-side {
+    width: 30%;
+}
+
+.form-description textarea {
+    width: 100%;
+    min-height: 197px;
+    margin-bottom: 50px;
+}
+
+.movie-input {
+    position: relative;
+}
+
+.movie-input label {
+    display: block;
+    text-transform: uppercase;
+    color: #F65261;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.movie-input input, .movie-input textarea, .genre-select div[class$="control"] {
+    margin-bottom: 30px;
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
+    background-color: #323232;
+    border: none;
+    padding: 15px 18px;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.movie-dialog-footer {
+    text-align: right;
+}
+
+.genre-select div[class$="control"] {
+    padding: 9px 18px;
+}
+
+.genre-select div[class$="menu"] {
+    background-color: #323232;
+}
+
+.error-message {
+    position: absolute;
+    top: 90px;
+    left: 0;
+}
+
+.wrap-header {
+    height: 600px;
+    box-sizing: border-box;
+    position: relative;
+    filter: brightness(50%);
+    font-family: "Montserrat", serif;
+    box-shadow: 0 7px 16px -7px #222;
+}
+
+.wrap-header:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/header-background.png');
+    background-repeat: no-repeat;
+    background-position: 50% 86%;
+    background-size: cover;
+    filter: blur(3px);
+}
+
+.content-header {
+    padding: 20px 56px;
+    box-sizing: border-box;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.top-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.middle-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 73%;
+}
+
+.add-button {
+    width: 177px;
+    height: 46px;
+    opacity: 0.7;
+    font-size: 20px;
+    color: #F65261;
+    border: none;
+    font-weight: bold;
+    background-color: #606060;
+    margin-left: auto;
+    margin-right: 0;
+    cursor: pointer;
+}
+
+.logo-block {
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: cover;
+    width: 100px;
+    height: 105px;
+    position: absolute;
+    top: -25px;
+    left: 40px;
+}
+
+.detail-content {
+    display: flex;
+}
+
+.movie-details-wrapper {
+    padding: 20px 56px;
+    box-sizing: border-box;
+    height: 600px;
+    width: 100%;
+    background-color: #232323;
+    color: #fff;
+    font-weight: 300;
+}
+
+.movie-details-wrapper .add-button {
+    width: 30px;
+    background: none;
+}
+
+.detail-poster img {
+    width: 323px;
+    height: 486px;
+}
+
+.detail-text {
+    padding-left: 53px;
+}
+
+.detail-text-name {
+    font-size: 40px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.detail-text-rating {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    padding: 14px;
+    position: relative;
+    top: -6px;
+    font-size: 20px;
+    width: 56px;
+    height: 56px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.detail-text-genres {
+    font-size: 14px;
+}
+
+.detail-text-numbers {
+    display: flex;
+    color: #f65261;
+    font-size: 24px;
+    margin: 30px 0;
+}
+
+.detail-text-date {
+    margin-right: 51px;
+}
+
+.detail-text-description {
+    font-size: 20px;
+}
+
+.wrap-block {
+    width: 90%;
+}
+
+.search-button {
+    width: 233px;
+    height: 57px;
+    font-size: 20px;
+    background-color: #F65261;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-input {
+    padding: 0 10px;
+    width: calc(100% - 260px);
+    height: 57px;
+    background-color: #323232;
+    opacity: 0.8;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    margin-right: 6px;
+}
+
+.label {
+    color: #fff;
+    font-size: 35px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}

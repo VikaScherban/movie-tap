@@ -61,6 +61,11 @@ Cypress launches all e2e test files that are located in `cypress/e2e` folder.
 
 Mor info about the library is here [Cypress](https://www.cypress.io/)
 
+## Run Remix App
+1. Go to `my-remix-app` folder
+2. `npm i` 
+3. Launch `npm run dev`
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
