@@ -41,13 +41,11 @@ function MovieDialog(): React.JSX.Element {
     }
 
     return (
-        <>
-            <Portal>
-                <BaseDialog title={currentMovie ? 'Edit Movie' : 'Add New Movie'} onClose={onClose}>
-                    <MovieForm onClose={onClose} movie={currentMovie} onSubmitChanges={onSubmitChanges}/>
-                </BaseDialog>
-            </Portal>
-        </>
+        <Portal>
+            <BaseDialog title={currentMovie ? 'Edit Movie' : 'Add New Movie'} onClose={onClose}>
+                <MovieForm onClose={onClose} movie={currentMovie} onSubmitChanges={onSubmitChanges}/>
+            </BaseDialog>
+        </Portal>
     );
 }
 
