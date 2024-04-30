@@ -33,6 +33,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `npm run lint`
+
+Analyzes your code and detects potential errors, bugs, stylistic errors, and suspicious constructs.
+Linter will check your code against a set of rules defined in your configuration, and report any issues it finds. This helps to ensure that your code is consistent and adheres to best practices.
+
 ### `npm run storybook`
 
 Launches the storybook, all stories that are located in `src/stories` folder.

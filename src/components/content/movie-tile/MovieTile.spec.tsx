@@ -1,171 +1,178 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import MovieTile from './MovieTile';
-import {Movie} from "../../../models/movies";
-import {GenreTitle} from "../../../constants/genres-const";
-import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
+import { Movie } from '../../../models/movies';
+import { GenreTitle } from '../../../constants/genres-const';
+import useMultipleSearchParams from '../../../hooks/UseMultipleSearchParams';
+
 jest.mock('../../../hooks/UseMultipleSearchParams', () => jest.fn());
 
 describe('MovieTile', () => {
-    let movieInfoMock: Movie;
-    let onMovieEditSpy: jest.Mock<any>;
-    let onMovieDeleteSpy: jest.Mock<any>;
-    let navigateToSpy: jest.Mock<any>;
+  let movieInfoMock: Movie;
+  let onMovieEditSpy: jest.Mock<any>;
+  let onMovieDeleteSpy: jest.Mock<any>;
+  let navigateToSpy: jest.Mock<any>;
 
-    beforeEach(() => {
-        window.scrollTo = jest.fn();
-        navigateToSpy = jest.fn();
-        // @ts-ignore
-        useMultipleSearchParams.mockReturnValue({
-            navigateTo: navigateToSpy
-        });
-
-        movieInfoMock = {
-            id: 1,
-            title: 'Example Movie',
-            genres: [GenreTitle.Comedy, GenreTitle.Documentary],
-            release_date: '2022-01-01',
-            poster_path: 'https://example.com/movie-poster.png',
-            overview: 'Some text',
-            runtime: 345,
-            vote_average: 7.5,
-        };
-        onMovieEditSpy = jest.fn();
-        onMovieDeleteSpy = jest.fn();
-    })
-
-    it('should render the movie tile component', () => {
-        render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieDelete={onMovieDeleteSpy}
-        />);
-
-        const movieTile = screen.getByTestId('movie-card-1');
-
-        expect(movieTile).toBeInTheDocument();
+  beforeEach(() => {
+    window.scrollTo = jest.fn();
+    navigateToSpy = jest.fn();
+    // @ts-ignore
+    useMultipleSearchParams.mockReturnValue({
+      navigateTo: navigateToSpy,
     });
 
-    it('should render the movie name', () => {
-        render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieDelete={onMovieDeleteSpy}
-        />);
+    movieInfoMock = {
+      id: 1,
+      title: 'Example Movie',
+      genres: [GenreTitle.Comedy, GenreTitle.Documentary],
+      release_date: '2022-01-01',
+      poster_path: 'https://example.com/movie-poster.png',
+      overview: 'Some text',
+      runtime: 345,
+      vote_average: 7.5,
+    };
+    onMovieEditSpy = jest.fn();
+    onMovieDeleteSpy = jest.fn();
+  });
 
-        const movieName = screen.getByText('Example Movie');
+  it('should render the movie tile component', () => {
+    render(<MovieTile
+      movieInfo={movieInfoMock}
+      onMovieDelete={onMovieDeleteSpy}
+    />);
 
-        expect(movieName).toBeInTheDocument();
-    });
+    const movieTile = screen.getByTestId('movie-card-1');
 
-    it('should render the movie genres', () => {
-        render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieDelete={onMovieDeleteSpy}
-        />);
+    expect(movieTile).toBeInTheDocument();
+  });
 
-        const movieGenres = screen.getByText('Comedy, Documentary');
+  it('should render the movie name', () => {
+    render(<MovieTile
+      movieInfo={movieInfoMock}
+      onMovieDelete={onMovieDeleteSpy}
+    />);
 
-        expect(movieGenres).toBeInTheDocument();
-    });
+    const movieName = screen.getByText('Example Movie');
 
-    it('should render the movie date', () => {
-        render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieDelete={onMovieDeleteSpy}
-        />);
+    expect(movieName).toBeInTheDocument();
+  });
 
-        const movieDate = screen.getByText('2022-01-01');
+  it('should render the movie genres', () => {
+    render(<MovieTile
+      movieInfo={movieInfoMock}
+      onMovieDelete={onMovieDeleteSpy}
+    />);
 
-        expect(movieDate).toBeInTheDocument();
-    });
+    const movieGenres = screen.getByText('Comedy, Documentary');
 
-    it('should call the onMovieSelected prop when the movie poster is clicked', () => {
-        render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieDelete={onMovieDeleteSpy}
-        />);
+    expect(movieGenres).toBeInTheDocument();
+  });
 
-        const moviePoster = screen.getByText('Example Movie');
-        fireEvent.click(moviePoster);
+  it('should render the movie date', () => {
+    render(<MovieTile
+      movieInfo={movieInfoMock}
+      onMovieDelete={onMovieDeleteSpy}
+    />);
 
-        expect(navigateToSpy).toHaveBeenCalledWith('/1');
-    });
+    const movieDate = screen.getByText('2022-01-01');
 
-    it('should call the onMovieSelected prop when the movie name is clicked', () => {
-        render(<MovieTile movieInfo={movieInfoMock}
-                          onMovieDelete={onMovieDeleteSpy}
-        />);
+    expect(movieDate).toBeInTheDocument();
+  });
 
-        const movieName = screen.getByText('Example Movie');
-        fireEvent.click(movieName);
+  it('should call the onMovieSelected prop when the movie poster is clicked', () => {
+    render(<MovieTile
+      movieInfo={movieInfoMock}
+      onMovieDelete={onMovieDeleteSpy}
+    />);
 
-        expect(navigateToSpy).toHaveBeenCalledWith( '/1');
-    });
+    const moviePoster = screen.getByText('Example Movie');
+    fireEvent.click(moviePoster);
 
-    it('should call onMovieEdit when the "Edit" option is clicked', () => {
-        render(
-            <MovieTile
-                movieInfo={movieInfoMock}
-                onMovieDelete={onMovieDeleteSpy}
-            />
-        );
+    expect(navigateToSpy).toHaveBeenCalledWith('/1');
+  });
 
-        const threeDotButtons = screen.getAllByTestId('three-dot-button');
-        fireEvent.click(threeDotButtons[0]);
-        const editOption = screen.getByText('Edit');
-        fireEvent.click(editOption);
+  it('should call the onMovieSelected prop when the movie name is clicked', () => {
+    render(<MovieTile
+      movieInfo={movieInfoMock}
+      onMovieDelete={onMovieDeleteSpy}
+    />);
 
-        expect(navigateToSpy).toHaveBeenCalledWith( '/1/edit');
-    });
+    const movieName = screen.getByText('Example Movie');
+    fireEvent.click(movieName);
 
-    it('should call onMovieDelete when the "Delete" option is clicked', () => {
-        render(
-            <MovieTile
-                movieInfo={movieInfoMock}
-                onMovieDelete={onMovieDeleteSpy}
-            />
-        );
+    expect(navigateToSpy).toHaveBeenCalledWith('/1');
+  });
 
-        const threeDotButtons = screen.getAllByTestId('three-dot-button');
-        fireEvent.click(threeDotButtons[0]);
-        const deleteOption = screen.getByText('Delete');
-        fireEvent.click(deleteOption);
-        const confirmDeleteButton = screen.getByText('CONFIRM')
-        fireEvent.click(confirmDeleteButton);
+  it('should call onMovieEdit when the "Edit" option is clicked', () => {
+    render(
+      <MovieTile
+        movieInfo={movieInfoMock}
+        onMovieDelete={onMovieDeleteSpy}
+      />,
+    );
 
-        expect(onMovieDeleteSpy).toHaveBeenCalledTimes(1);
-        expect(onMovieDeleteSpy).toHaveBeenCalledWith(movieInfoMock.id);
-    });
+    const threeDotButtons = screen.getAllByTestId('three-dot-button');
+    fireEvent.click(threeDotButtons[0]);
+    const editOption = screen.getByText('Edit');
+    fireEvent.click(editOption);
 
-    it('should close three dots menu', () => {
-        render(
-            <MovieTile
-                movieInfo={movieInfoMock}
-                onMovieDelete={onMovieDeleteSpy}
-            />
-        );
+    expect(navigateToSpy).toHaveBeenCalledWith('/1/edit');
+  });
 
-        const threeDotButton = screen.getByTestId('three-dot-button');
-        fireEvent.click(threeDotButton);
-        const closeOption = screen.getByTestId('movie-close-button');
-        fireEvent.click(closeOption);
+  it('should call onMovieDelete when the "Delete" option is clicked', () => {
+    render(
+      <MovieTile
+        movieInfo={movieInfoMock}
+        onMovieDelete={onMovieDeleteSpy}
+      />,
+    );
 
-        expect(onMovieEditSpy).not.toHaveBeenCalled();
-        expect(onMovieDeleteSpy).not.toHaveBeenCalled();
-        expect(closeOption).not.toBeInTheDocument();
-    });
+    const threeDotButtons = screen.getAllByTestId('three-dot-button');
+    fireEvent.click(threeDotButtons[0]);
+    const deleteOption = screen.getByText('Delete');
+    fireEvent.click(deleteOption);
+    const confirmDeleteButton = screen.getByText('CONFIRM');
+    fireEvent.click(confirmDeleteButton);
 
-    it('should close confirm deletion dialog', () => {
-        render(
-            <MovieTile
-                movieInfo={movieInfoMock}
-                onMovieDelete={onMovieDeleteSpy}
-            />
-        );
+    expect(onMovieDeleteSpy).toHaveBeenCalledTimes(1);
+    expect(onMovieDeleteSpy).toHaveBeenCalledWith(movieInfoMock.id);
+  });
 
-        const threeDotButtons = screen.getAllByTestId('three-dot-button');
-        fireEvent.click(threeDotButtons[0]);
-        const deleteOption = screen.getByText('Delete');
-        fireEvent.click(deleteOption);
-        const closeDeleteButton = screen.getByTestId('dialog-close-button')
-        fireEvent.click(closeDeleteButton);
+  it('should close three dots menu', () => {
+    render(
+      <MovieTile
+        movieInfo={movieInfoMock}
+        onMovieDelete={onMovieDeleteSpy}
+      />,
+    );
 
-        expect(onMovieEditSpy).not.toHaveBeenCalled();
-        expect(onMovieDeleteSpy).not.toHaveBeenCalled();
-        expect(deleteOption).not.toBeInTheDocument();
-        expect(closeDeleteButton).not.toBeInTheDocument();
-    });
+    const threeDotButton = screen.getByTestId('three-dot-button');
+    fireEvent.click(threeDotButton);
+    const closeOption = screen.getByTestId('movie-close-button');
+    fireEvent.click(closeOption);
+
+    expect(onMovieEditSpy).not.toHaveBeenCalled();
+    expect(onMovieDeleteSpy).not.toHaveBeenCalled();
+    expect(closeOption).not.toBeInTheDocument();
+  });
+
+  it('should close confirm deletion dialog', () => {
+    render(
+      <MovieTile
+        movieInfo={movieInfoMock}
+        onMovieDelete={onMovieDeleteSpy}
+      />,
+    );
+
+    const threeDotButtons = screen.getAllByTestId('three-dot-button');
+    fireEvent.click(threeDotButtons[0]);
+    const deleteOption = screen.getByText('Delete');
+    fireEvent.click(deleteOption);
+    const closeDeleteButton = screen.getByTestId('dialog-close-button');
+    fireEvent.click(closeDeleteButton);
+
+    expect(onMovieEditSpy).not.toHaveBeenCalled();
+    expect(onMovieDeleteSpy).not.toHaveBeenCalled();
+    expect(deleteOption).not.toBeInTheDocument();
+    expect(closeDeleteButton).not.toBeInTheDocument();
+  });
 });

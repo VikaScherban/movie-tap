@@ -1,14 +1,14 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
-import MovieListPage from "./MovieListPage";
-import useFilteredMovieList from "../hooks/UseFilteredMovieList";
+import { fireEvent, render, screen } from '@testing-library/react';
+import MovieListPage from './MovieListPage';
+import useFilteredMovieList from '../hooks/UseFilteredMovieList';
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => jest.fn(),
   useLocation: () => jest.fn(),
 }));
-jest.mock("../hooks/UseFilteredMovieList", () => jest.fn());
-
+jest.mock('../hooks/UseFilteredMovieList', () => jest.fn());
 
 describe('MovieListPage', () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('MovieListPage', () => {
     useFilteredMovieList.mockReturnValue([
       { id: 1, title: 'Movie 1', genres: [] },
       { id: 2, title: 'Movie 2', genres: [] },
-      { id: 3, title: 'Movie 3', genres: [] }
+      { id: 3, title: 'Movie 3', genres: [] },
     ]);
   });
 
@@ -37,7 +37,7 @@ describe('MovieListPage', () => {
     fireEvent.click(threeDotButtons[0]);
     const deleteButton = screen.getByText('Delete');
     fireEvent.click(deleteButton);
-    const confirmDeleteButton = screen.getByText('CONFIRM')
+    const confirmDeleteButton = screen.getByText('CONFIRM');
     fireEvent.click(confirmDeleteButton);
 
     expect(console.log).toHaveBeenCalledWith('Movie 1 is removed');

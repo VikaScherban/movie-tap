@@ -13,6 +13,8 @@ export interface Movie {
     revenue?: number
 }
 
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export interface NewMovie extends Movie {
     id?: number;

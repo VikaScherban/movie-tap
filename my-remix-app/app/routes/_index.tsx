@@ -1,6 +1,5 @@
 import {LoaderFunctionArgs, MetaFunction} from "@remix-run/node";
 import {useLoaderData} from "@remix-run/react";
-import React from "react";
 import Content from "~/components/content/Content";
 import HeaderWithSearch from "~/components/header/header-with-search/HeaderWithSearch";
 

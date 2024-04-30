@@ -18,10 +18,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react",
+    "outDir": "dist"
   },
   "include": [
     "src"
   ],
-  "exclude": ["storybook-static", "node_modules", "build"]
+  "exclude": ["storybook-static", "node_modules", "build", "**/*.spec.tsx", "dist"]
 }

@@ -1,7 +1,8 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
-import SearchForm from "./SearchForm";
-import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
+import { fireEvent, render, screen } from '@testing-library/react';
+import SearchForm from './SearchForm';
+import useMultipleSearchParams from '../../../hooks/UseMultipleSearchParams';
+
 jest.mock('../../../hooks/UseMultipleSearchParams', () => jest.fn());
 
 describe('SearchForm', () => {
@@ -66,7 +67,7 @@ describe('SearchForm', () => {
   it('should set initial search value from url', () => {
     const text = 'Some movie';
 
-    getQueryParamsSpy.mockReturnValue({search: text});
+    getQueryParamsSpy.mockReturnValue({ search: text });
 
     render(<SearchForm />);
 

@@ -6,11 +6,14 @@ function GenreSelect({genres, currentGenre, onGenreSelected}: GenreData): React.
         <div>
             <ul className="genres-list">
                 {genres.map((genre) => (
-                    <li
-                        key={genre}
-                        className={currentGenre === genre ? "genre-tab active" : "genre-tab"}
-                        onClick={() => onGenreSelected(genre)}
-                    >{genre}</li>
+                    <li key={genre}>
+                        <button
+                            className={currentGenre === genre ? "genre-tab active" : "genre-tab"}
+                            onClick={() => onGenreSelected(genre)}
+                        >
+                            {genre}
+                        </button>
+                    </li>
                 ))}
             </ul>
         </div>
