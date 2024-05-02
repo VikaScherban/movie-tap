@@ -1,9 +1,8 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
-jest.mock("./hooks/UseFilteredMovieList", () => {
-  return () => []
-});
+
+jest.mock('./hooks/UseFilteredMovieList', () => () => []);
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => jest.fn(),
@@ -12,7 +11,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('App', () => {
   it('renders', () => {
-    render(<App/>);
+    render(<App />);
 
     expect(screen.getByTestId('movie-list')).toBeInTheDocument();
   });

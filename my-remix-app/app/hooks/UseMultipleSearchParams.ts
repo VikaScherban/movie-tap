@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useLocation, useNavigate} from "@remix-run/react";
-import {UrlQueries} from "../constants/url-queries-const";
-import {MultipleSearchParams} from "../models/search";
+import {UrlQueries} from "~/constants/url-queries-const";
+import {MultipleSearchParams} from "~/models/search";
 
 const useMultipleSearchParams = (): MultipleSearchParams => {
     const navigate = useNavigate();
@@ -11,9 +11,9 @@ const useMultipleSearchParams = (): MultipleSearchParams => {
         const searchParams = new URLSearchParams(location.search);
         const mySearchParams = {};
 
-        // @ts-ignore
         for (const [key, value] of searchParams.entries()) {
-            // @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             mySearchParams[key] = value;
         }
     }, [location.search]);
@@ -28,7 +28,8 @@ const useMultipleSearchParams = (): MultipleSearchParams => {
         const searchParams = new URLSearchParams(location.search);
 
         Object.keys(params).forEach((key) => {
-            // @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             searchParams.set(key, params[key]);
         });
 

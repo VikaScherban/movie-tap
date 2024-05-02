@@ -1,4 +1,4 @@
-import {Movie} from "./movies";
+import { Movie } from './movies';
 
 export interface ContentData {
     onMovieDelete: (id: number) => void;

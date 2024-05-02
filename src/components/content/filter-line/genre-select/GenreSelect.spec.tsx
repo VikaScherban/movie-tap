@@ -1,23 +1,23 @@
-import {render, fireEvent, screen} from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import GenreSelect from './GenreSelect';
-import {GenreTitle} from "../../../../constants/genres-const";
+import { GenreTitle } from '../../../../constants/genres-const';
 
 describe('GenreSelect', () => {
   let genreSelectedSpy: jest.Mock<any>;
 
   beforeEach(() => {
     genreSelectedSpy = jest.fn();
-  })
+  });
 
   it('should render correct genre items', () => {
     const currentGenre = GenreTitle.Crime;
 
     render(
-        <GenreSelect
-            genres={Object.values(GenreTitle)}
-            currentGenre={currentGenre}
-            onGenreSelected={genreSelectedSpy}
-        />
+      <GenreSelect
+        genres={Object.values(GenreTitle)}
+        currentGenre={currentGenre}
+        onGenreSelected={genreSelectedSpy}
+      />,
     );
 
     const genreItems = screen.getAllByRole('listitem');
@@ -34,11 +34,11 @@ describe('GenreSelect', () => {
     const currentGenre = GenreTitle.Documentary;
 
     render(
-        <GenreSelect
-            genres={Object.values(GenreTitle)}
-            currentGenre={currentGenre}
-            onGenreSelected={genreSelectedSpy}
-        />
+      <GenreSelect
+        genres={Object.values(GenreTitle)}
+        currentGenre={currentGenre}
+        onGenreSelected={genreSelectedSpy}
+      />,
     );
 
     const documentaryTab = screen.getByText('Documentary');
@@ -52,11 +52,11 @@ describe('GenreSelect', () => {
     const currentGenre = GenreTitle.Crime;
 
     render(
-        <GenreSelect
-            genres={Object.values(GenreTitle)}
-            currentGenre={currentGenre}
-            onGenreSelected={genreSelectedSpy}
-        />
+      <GenreSelect
+        genres={Object.values(GenreTitle)}
+        currentGenre={currentGenre}
+        onGenreSelected={genreSelectedSpy}
+      />,
     );
 
     const comedyTab = screen.getByText('Comedy');

@@ -1,7 +1,7 @@
 import {MovieTileData} from "../../../models/movies";
 import {faEllipsisV, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React, {useState} from "react";
+import React, {MouseEvent, useState} from "react";
 import BaseDialog from "../../dialogs/base-dialog/BaseDialog";
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 
@@ -10,35 +10,35 @@ function MovieTile({movieInfo, onMovieDelete}: MovieTileData): React.JSX.Element
     const [isDeleteDialogOpen, setOpenDeleteDialog] = useState(false);
     const {navigateTo} = useMultipleSearchParams();
 
-    const onEditClick = (event: any): void => {
+    const onEditClick = (event: MouseEvent<HTMLButtonElement>): void => {
         event.stopPropagation();
         setOpenMenu(true);
     }
 
-    const onCloseMenu = (event: any): void => {
+    const onCloseMenu = (event: MouseEvent<HTMLDivElement>): void => {
         event.stopPropagation();
         setOpenMenu(false);
     }
 
-    const onEditMovie = (event:any): void => {
+    const onEditMovie = (event:MouseEvent<HTMLDivElement>): void => {
         event.stopPropagation();
         setOpenMenu(false);
 
         navigateTo(`/${movieInfo.id}/edit`);
     }
 
-    const onDeleteMovie = (event:any): void => {
+    const onDeleteMovie = (event:MouseEvent<HTMLDivElement>): void => {
         event.stopPropagation();
         setOpenMenu(false);
         setOpenDeleteDialog(true);
     }
 
-    const onCloseDeleteDialog = (event: any): void  => {
+    const onCloseDeleteDialog = (event: MouseEvent<HTMLButtonElement>): void  => {
         event.stopPropagation();
         setOpenDeleteDialog(false);
     }
 
-    const onMovieDeleteConfirm = (event: any): void => {
+    const onMovieDeleteConfirm = (event: MouseEvent<HTMLButtonElement>): void => {
         event.stopPropagation();
         setOpenDeleteDialog(false);
         onMovieDelete(movieInfo.id)
@@ -51,22 +51,27 @@ function MovieTile({movieInfo, onMovieDelete}: MovieTileData): React.JSX.Element
 
     return (
         <div className="movie-card" data-testid={"movie-card-" + movieInfo.id}>
-            <div className="movie-poster" onClick={() => onMovieSelected(movieInfo.id)}>
-                <img src={movieInfo.poster_path} alt={movieInfo.title} key={movieInfo.poster_path}/>
-                <button className="three-dot-button" data-testid="three-dot-button"  onClick={onEditClick}>
+            <div className="movie-poster">
+                <button onClick={() => onMovieSelected(movieInfo.id)}>
+                    <img src={movieInfo.poster_path} alt={movieInfo.title} key={movieInfo.poster_path}/>
+                </button>
+                <button className="three-dot-button" data-testid="three-dot-button" onClick={onEditClick}>
                     <FontAwesomeIcon icon={faEllipsisV}/>
                 </button>
                 {isMenuOpen &&
                     <div className="edit-movie-menu">
-                        <button className="edit-movie-close-button" data-testid="movie-close-button" onClick={onCloseMenu}>
+                        <button className="edit-movie-close-button" data-testid="movie-close-button"
+                                onClick={onCloseMenu}>
                             <FontAwesomeIcon icon={faTimes}/>
                         </button>
-                        <div className="edit-movie-option"
+                        <button className="edit-movie-option"
                              onClick={onEditMovie}
-                        >Edit</div>
-                        <div className="edit-movie-option"
+                        >Edit
+                        </button>
+                        <button className="edit-movie-option"
                              onClick={onDeleteMovie}
-                        >Delete</div>
+                        >Delete
+                        </button>
                     </div>
                 }
                 {isDeleteDialogOpen &&
@@ -80,7 +85,7 @@ function MovieTile({movieInfo, onMovieDelete}: MovieTileData): React.JSX.Element
             </div>
             <div className="movie-info">
                 <div>
-                <div className="movie-name" onClick={() => onMovieSelected(movieInfo.id)}>{movieInfo.title}</div>
+                    <div className="movie-name" onClick={() => onMovieSelected(movieInfo.id)}>{movieInfo.title}</div>
                     <div className="movie-genres">{movieInfo.genres.join(', ')}</div>
                 </div>
                 <div className="movie-date">{movieInfo.release_date}</div>

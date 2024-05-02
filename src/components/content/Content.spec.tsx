@@ -1,9 +1,10 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import Content from './Content';
-import {Movie} from "../../models/movies";
-import {GenreTitle} from "../../constants/genres-const";
+import { Movie } from '../../models/movies';
+import { GenreTitle } from '../../constants/genres-const';
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => jest.fn(),
@@ -35,7 +36,7 @@ describe('Content', () => {
         genres: [GenreTitle.Crime, GenreTitle.Documentary],
         vote_average: 8.1,
         runtime: 192,
-        overview: 'Description of Movie 2'
+        overview: 'Description of Movie 2',
       },
       {
         id: 2,
@@ -45,14 +46,15 @@ describe('Content', () => {
         genres: [GenreTitle.Documentary],
         vote_average: 9.4,
         runtime: 154,
-        overview: 'Description of Movie 3'
+        overview: 'Description of Movie 3',
       },
     ];
   });
 
   it('should render the movie list', () => {
-    render(<Content movieList={moviesListMock}
-                    onMovieDelete={onMovieDeleteSpy}
+    render(<Content
+      movieList={moviesListMock}
+      onMovieDelete={onMovieDeleteSpy}
     />);
 
     const movieList = screen.getByTestId('movie-list');
@@ -61,8 +63,9 @@ describe('Content', () => {
   });
 
   it('should render the filter line', () => {
-    render(<Content movieList={[]}
-                    onMovieDelete={onMovieDeleteSpy}
+    render(<Content
+      movieList={[]}
+      onMovieDelete={onMovieDeleteSpy}
     />);
 
     const filterLine = screen.getByTestId('filter-line');
@@ -71,8 +74,9 @@ describe('Content', () => {
   });
 
   it('should render the count of movies found', () => {
-    render(<Content movieList={moviesListMock}
-                    onMovieDelete={onMovieDeleteSpy}
+    render(<Content
+      movieList={moviesListMock}
+      onMovieDelete={onMovieDeleteSpy}
     />);
 
     const countResult = screen.getByText('movies found');
@@ -81,8 +85,9 @@ describe('Content', () => {
   });
 
   it('should render the movie tiles based on the movies list', () => {
-    render(<Content movieList={moviesListMock}
-                    onMovieDelete={onMovieDeleteSpy}
+    render(<Content
+      movieList={moviesListMock}
+      onMovieDelete={onMovieDeleteSpy}
     />);
 
     const movieTitle = screen.getByText('Movie 1');
@@ -92,17 +97,17 @@ describe('Content', () => {
 
   it('calls onMovieDelete when the delete button in a movie tile is clicked', () => {
     render(
-        <Content
-            movieList={moviesListMock}
-            onMovieDelete={onMovieDeleteSpy}
-        />
+      <Content
+        movieList={moviesListMock}
+        onMovieDelete={onMovieDeleteSpy}
+      />,
     );
 
     const threeDotButtons = screen.getAllByTestId('three-dot-button');
     fireEvent.click(threeDotButtons[0]);
     const deleteButton = screen.getByText('Delete');
     fireEvent.click(deleteButton);
-    const confirmDeleteButton = screen.getByText('CONFIRM')
+    const confirmDeleteButton = screen.getByText('CONFIRM');
     fireEvent.click(confirmDeleteButton);
 
     expect(onMovieDeleteSpy).toHaveBeenCalledTimes(1);

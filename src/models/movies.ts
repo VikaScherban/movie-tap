@@ -30,6 +30,6 @@ export interface MovieFormData {
 }
 
 export interface SaveMovieData {
-    createMovie: (movie: NewMovie)  => Promise<void>;
-    updateMovie: (movie: Movie)  => Promise<void>;
+    createMovie: (movie: NewMovie) => Promise<void>;
+    updateMovie: (movie: Movie) => Promise<void>;
 }

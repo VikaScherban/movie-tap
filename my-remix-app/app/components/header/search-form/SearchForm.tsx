@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
 import {Outlet} from "@remix-run/react";
 
@@ -6,18 +6,18 @@ function SearchForm(): React.JSX.Element {
     const { updateQueryParams, getQueryParams } = useMultipleSearchParams();
     const {search} = getQueryParams();
     const [formSearch, updateFormSearch] =  useState(search || '');
-    const onSearch = (event: any): void => {
+    const onSearch = (event: FormEvent<HTMLFormElement>): void => {
         updateQueryParams({search: formSearch});
         event.preventDefault();
     }
 
-    const onKeyDown = (event: any): void => {
+    const onKeyDown = (event: KeyboardEvent): void => {
         if (event.key === 'Enter') {
             updateQueryParams({search: formSearch});
         }
     }
 
-    const onQueryChange = (event: any): void => {
+    const onQueryChange = (event: ChangeEvent<HTMLInputElement>): void => {
         updateFormSearch(event.target.value || '');
     }
 

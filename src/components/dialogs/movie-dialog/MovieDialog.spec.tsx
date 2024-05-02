@@ -1,11 +1,12 @@
-import {render, fireEvent, screen} from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { useForm } from 'react-hook-form';
 import MovieDialog from './MovieDialog';
-import useMovieById from "../../../hooks/UseMovieById";
-import useSaveMovie from "../../../hooks/UseSaveMovie";
-import useMultipleSearchParams from "../../../hooks/UseMultipleSearchParams";
-import {useForm} from "react-hook-form";
-import {Movie} from "../../../models/movies";
-import {MovieStatus} from "../../../constants/url-queries-const";
+import useMovieById from '../../../hooks/UseMovieById';
+import useSaveMovie from '../../../hooks/UseSaveMovie';
+import useMultipleSearchParams from '../../../hooks/UseMultipleSearchParams';
+import { Movie } from '../../../models/movies';
+import { MovieStatus } from '../../../constants/url-queries-const';
+
 jest.mock('../../../hooks/UseMovieById', () => jest.fn());
 jest.mock('../../../hooks/UseSaveMovie', () => jest.fn());
 jest.mock('../../../hooks/UseMultipleSearchParams', () => jest.fn());
@@ -57,9 +58,9 @@ describe('MovieDialog', () => {
   });
 
   it('should render the movie dialog component with Edit title and movie form', () => {
-    (useMovieById as jest.Mock).mockReturnValue({movie: mockMovie, status: MovieStatus.Ready});
+    (useMovieById as jest.Mock).mockReturnValue({ movie: mockMovie, status: MovieStatus.Ready });
 
-    render(<MovieDialog/>);
+    render(<MovieDialog />);
 
     expect(screen.getByTestId('dialog')).toBeInTheDocument();
     expect(screen.getByText('Edit Movie')).toBeInTheDocument();
@@ -67,9 +68,9 @@ describe('MovieDialog', () => {
   });
 
   it('should render the movie dialog component with New movie title and movie form', () => {
-    (useMovieById as jest.Mock).mockReturnValue({movie: null, status: MovieStatus.Ready});
+    (useMovieById as jest.Mock).mockReturnValue({ movie: null, status: MovieStatus.Ready });
 
-    render(<MovieDialog/>);
+    render(<MovieDialog />);
 
     expect(screen.getByTestId('dialog')).toBeInTheDocument();
     expect(screen.getByText('Add New Movie')).toBeInTheDocument();
@@ -77,9 +78,9 @@ describe('MovieDialog', () => {
   });
 
   it('should render the loading state when data is not ready', () => {
-    (useMovieById as jest.Mock).mockReturnValue({movie: null, status: MovieStatus.Loading});
+    (useMovieById as jest.Mock).mockReturnValue({ movie: null, status: MovieStatus.Loading });
 
-    render(<MovieDialog/>);
+    render(<MovieDialog />);
 
     expect(screen.queryByTestId('dialog')).not.toBeInTheDocument();
     expect(screen.queryByText('Add New Movie')).not.toBeInTheDocument();
@@ -88,20 +89,20 @@ describe('MovieDialog', () => {
   });
 
   it('should call onClose when the dialog close button is clicked', () => {
-    (useMovieById as jest.Mock).mockReturnValue({movie: null, status: MovieStatus.Ready});
+    (useMovieById as jest.Mock).mockReturnValue({ movie: null, status: MovieStatus.Ready });
 
-    render(<MovieDialog/>);
+    render(<MovieDialog />);
 
     const dialogCloseButton = screen.getByTestId('dialog-close-button');
     fireEvent.click(dialogCloseButton);
 
-    expect(navigateToSpy).toHaveBeenCalledWith( '/');
+    expect(navigateToSpy).toHaveBeenCalledWith('/');
   });
 
   it('should call createMovie when the movie form is submitted', () => {
     const createMovieSpy = jest.fn().mockResolvedValue({});
-    const handleSubmitSpy = jest.fn((callback) => callback({...mockMovie, id: undefined}));
-    (useMovieById as jest.Mock).mockReturnValue({movie: null, status: MovieStatus.Ready});
+    const handleSubmitSpy = jest.fn((callback) => callback({ ...mockMovie, id: undefined }));
+    (useMovieById as jest.Mock).mockReturnValue({ movie: null, status: MovieStatus.Ready });
     // @ts-ignore
     useSaveMovie.mockReturnValueOnce({
       createMovie: createMovieSpy,
@@ -115,24 +116,24 @@ describe('MovieDialog', () => {
       formState: { errors: {} },
     });
 
-    render(<MovieDialog/>);
+    render(<MovieDialog />);
 
     const form = screen.getByTestId('movie-form');
     fireEvent.submit(form);
 
-    expect(createMovieSpy).toHaveBeenCalledWith({...mockMovie});
+    expect(createMovieSpy).toHaveBeenCalledWith({ ...mockMovie });
   });
 
   it('should call updateMovie when a movie is edited', async () => {
-    (useMovieById as jest.Mock).mockReturnValue({movie: mockMovie, status: MovieStatus.Ready});
+    (useMovieById as jest.Mock).mockReturnValue({ movie: mockMovie, status: MovieStatus.Ready });
     const updateMovie = jest.fn().mockResolvedValue({});
     // @ts-ignore
     useSaveMovie.mockReturnValueOnce({
       createMovie: jest.fn().mockResolvedValue({}),
-      updateMovie: updateMovie,
+      updateMovie,
     });
 
-    render(<MovieDialog/>);
+    render(<MovieDialog />);
 
     const form = screen.getByTestId('movie-form');
     fireEvent.submit(form);

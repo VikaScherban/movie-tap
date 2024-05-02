@@ -1,9 +1,9 @@
 import {SortByOptions} from "../../../../constants/sort-control-const";
 import {SortControlData} from "../../../../models/sortControl";
-import React from "react";
+import React, {ChangeEvent} from "react";
 
 function SortControl({currentSorting, onSortChanged}: SortControlData): React.JSX.Element {
-    const onSortChange = (event: any)=> {
+    const onSortChange = (event: ChangeEvent<HTMLSelectElement>)=> {
         onSortChanged(event.target.value);
     }
 

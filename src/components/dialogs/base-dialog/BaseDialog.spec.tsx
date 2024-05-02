@@ -1,4 +1,4 @@
-import {render, fireEvent, screen} from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import BaseDialog from './BaseDialog';
 
 describe('BaseDialog', () => {
@@ -8,9 +8,9 @@ describe('BaseDialog', () => {
     const onCloseMock = jest.fn();
 
     render(
-        <BaseDialog title={title} onClose={onCloseMock}>
-          {content}
-        </BaseDialog>
+      <BaseDialog title={title} onClose={onCloseMock}>
+        {content}
+      </BaseDialog>,
     );
 
     const dialog = screen.getByTestId('dialog');
@@ -28,9 +28,9 @@ describe('BaseDialog', () => {
     const onCloseMock = jest.fn();
 
     render(
-        <BaseDialog title="Test Dialog" onClose={onCloseMock}>
-          Dialog Content
-        </BaseDialog>
+      <BaseDialog title="Test Dialog" onClose={onCloseMock}>
+        Dialog Content
+      </BaseDialog>,
     );
 
     const dialogCloseButton = screen.getByTestId('dialog-close-button');
